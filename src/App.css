@@ -2,7 +2,7 @@ html {
   background-color: hsl(var(--brand-hue), var(--brand-saturation), var(--brand-lightness));
 }
 
-button {
+button, task {
   border-radius: .3rem;
   border: transparent;
   padding: 1rem;
@@ -21,4 +21,26 @@ color: var(--text1-light);
 
 .clock-readout {
   font-size: 5rem;
+}
+
+.top-menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-list-item {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  width: 80%;
+  background-color: var(--surface3-light);
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: .3rem;
+}
+
+.menu-icon {
+  height: 1rem;
 }
