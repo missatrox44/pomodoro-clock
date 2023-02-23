@@ -1,42 +1,65 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+html {
+  background-color: hsl(var(--brand-hue), var(--brand-saturation), var(--brand-lightness));
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+button, task {
+  border-radius: .3rem;
+  border: transparent;
+  padding: 1rem;
+  background-color: transparent;
+  color: var(--text1-dark);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button:hover {
+  background-color: var(--surface1-light);
+  color: var(--text1-light);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+h1, h2, h3, h4, h5, h6, span, p, .clock-readout {
+color: var(--text1-light);
 }
 
-.card {
-  padding: 2em;
+.clock-readout {
+  font-size: 5rem;
 }
 
-.read-the-docs {
-  color: #888;
+.top-menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-list-item {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  width: 80%;
+  background-color: var(--surface3-light);
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: .3rem;
+}
+
+.menu-icon {
+  height: 1rem;
+}
+
+.start-button{
+  cursor: pointer;
+    margin: 20px 0px 0px;
+    padding: 0px 12px;
+    border-radius: 4px;
+    box-shadow: rgb(235 235 235) 0px 6px 0px;
+    font-size: 22px;
+    height: 55px;
+    color: rgb(186, 73, 73);
+    font-weight: bold;
+    width: 200px;
+    background-color: var(--surface1-light);
+    transition: color 0.5s ease-in-out 0s;
+}
+
+.control-area {
+  display: block;
 }

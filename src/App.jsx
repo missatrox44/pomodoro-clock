@@ -2,33 +2,97 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
+function TopMenu(){
+  //TODO
+  return(
+    <nav className='top-menu'>
+      <span>Pomodoro Timer</span>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <button>Report</button>
+        <button>Setting</button>
+        <button>Login</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+    </nav>
+  )
+}
+function ControlArea(){
+  return(
+    <div className='ControlArea'>
+      <ControlMenu />
+      <Clock time={'25:00'}/>
+      <div>
+        <button className='start-button'>START</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
+  )
+  //TODO
+}
+function ControlMenu(){
+  return (
+    <div className='ControlMenu'>
+      <button>Pomodoro</button>
+      <button>Short Break</button>
+      <button>Long Break</button>
+    </div>
+  )
+  //TODO
+}
+function Clock({time}){
+  return(
+    <span className='clock-readout'>{time}</span>
+  )
+  //TODO
+}
+function TaskArea() {
+  //TODO
+  return(
+    <>
+      <button className="add-task">Add Task</button>
+      <TasksList />
+    </>
   )
 }
 
-export default App
+function TasksList() {
+  //TODO
+  return (
+    <div className='task-list'>
+    <TaskListItem name="Stuff." />
+    <TaskListItem name="More stuff." />
+    <TaskListItem name="Even more stuff." />
+    </div>
+  )
+}
+function TaskListItem({name}){
+  return (
+    <div className='task-list-item'>
+      <span>{name}</span>
+      <span>0/1</span>
+      <img className="menu-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwUlEQVR4nO3ZQQ6CMBSE4X8jnMF6Q6zeUoREDVcxuNc0KUuF7qZmvuTt2EwetJkAZlVpgRMwAK88VyACDZU4ABPw/jIPIFDBJqYfIZa5q2/mvCHEMkeEjQVB0jcjay4Ikp79iyBPhA0FQXqExYIgHcKafE+shbgBO8SFlTApxJ5KNPme6PMBkOaSXyf5TZjZdu4jKtxH1IzuI2Jm9xEx0X1EUHAfMbPqtP4/IsJ9RM3oPiJmdh8RE91HBAX3ETPkfADfe0+kCAYLvQAAAABJRU5ErkJggg=="/>
+    </div>
+  )
+}
+function PomodoroCreationMenu(){
+  //TODO
+  return(
+    <div className='pomodoro-creation-menu'>
+      <input>What are you working on?</input>
+      <span>Est Pomodoros</span>
+      <span>1</span>
+      <button>+1</button><button>-1</button>
+    </div>
+  )
+  
+}
+
+function App() {
+  //TODO
+  return (
+    <>
+      <TopMenu/>
+      <ControlArea />
+      <TaskArea />
+    </>
+    )
+}
+export default App;
