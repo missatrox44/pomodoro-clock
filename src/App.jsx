@@ -20,7 +20,9 @@ function ControlArea(){
     <div className='ControlArea'>
       <ControlMenu />
       <Clock time={'25:00'}/>
-      <button className='start-button'>START</button>
+      <div>
+        <button className='start-button'>START</button>
+      </div>
     </div>
   )
   //TODO

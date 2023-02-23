@@ -44,3 +44,22 @@ color: var(--text1-light);
 .menu-icon {
   height: 1rem;
 }
+
+.start-button{
+  cursor: pointer;
+    margin: 20px 0px 0px;
+    padding: 0px 12px;
+    border-radius: 4px;
+    box-shadow: rgb(235 235 235) 0px 6px 0px;
+    font-size: 22px;
+    height: 55px;
+    color: rgb(186, 73, 73);
+    font-weight: bold;
+    width: 200px;
+    background-color: var(--surface1-light);
+    transition: color 0.5s ease-in-out 0s;
+}
+
+.control-area {
+  display: block;
+}
