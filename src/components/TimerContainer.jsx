@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import TimerControls from './TimerControls';
 import Rounds from './Rounds';
 
-
 function TimerContainer() {
   const [timeLeft, setTimeLeft] = useState(25*60);
   const [timerRunning, setTimerRunning] = useState(false);
@@ -18,16 +17,22 @@ function TimerContainer() {
       return () => {clearInterval(timer)}
   }, [timerRunning]);
 
-
   function countdownHandler () {
     setTimerRunning(true);
   }
   
-  function onStartingTimeChange(seconds) {
+  function onStartingTimeChange(minutes) {
     setTimerRunning(false);
+    const seconds = minutes * 60;
     setTimeLeft(seconds);
   }
   
+function formatTime(timeLeft) {
+const minutes = Math.floor(timeLeft/60);
+const seconds = ((timeLeft%60).toString()).padEnd(2,0);
+  return `${minutes}:${seconds}`;
+}
+
   return (
     <div className='TimerContainer'>
     <div className="ControlMenu">
@@ -35,7 +40,7 @@ function TimerContainer() {
       <button onClick={() => onStartingTimeChange(5)}>Short Break</button>
       <button onClick={() => onStartingTimeChange(15)}>Long Break</button>
     </div>
-    <span className='clock-readout'>{ `${Math.ceil(timeLeft/60)}:${timeLeft%60}` }</span>
+    <span className='clock-readout'>{ (formatTime(timeLeft)).padStart(2,'0') }</span>
     <div>
       <button className='start-button' onClick={() => countdownHandler()}>START</button>
   
