@@ -8,6 +8,7 @@ const click = new Audio('./public/click.m4a');
 function TimerContainer() {
   const [timeLeft, setTimeLeft] = useState(25*60);
   const [timerRunning, setTimerRunning] = useState(false);
+  const [timerPaused, setTimerPaused] = useState(false);
   useEffect(() => {
       let timer;
       if (timerRunning){
@@ -20,10 +21,12 @@ function TimerContainer() {
 
   function countdownHandler () {
     click.play();
-    if (timerRunning){
+    if (timerRunning){ // pause the timer
       setTimerRunning(false);
-    } else {
+      setTimerPaused(true);
+    } else { // start the timer
       setTimerRunning(true);
+      setTimerPaused(false);
     }
   }
   
@@ -34,7 +37,7 @@ function TimerContainer() {
   }
 
   function onStartingTimeChange(minutes) {
-    if (timerRunning){
+    if (timerRunning || timerPaused){
       let text = "Are you sure? You will lose your current timer.";
       if (confirm(text) == true) {
         resetTimer(minutes);
