@@ -18,7 +18,11 @@ function TimerContainer() {
   }, [timerRunning]);
 
   function countdownHandler () {
-    setTimerRunning(true);
+    if (timerRunning){
+      setTimerRunning(false);
+    } else {
+      setTimerRunning(true);
+    }
   }
   
   function onStartingTimeChange(minutes) {
@@ -42,7 +46,7 @@ const seconds = ((timeLeft%60).toString()).padEnd(2,0);
     </div>
     <span className='clock-readout'>{ (formatTime(timeLeft)).padStart(2,'0') }</span>
     <div>
-      <button className='start-button' onClick={() => countdownHandler()}>START</button>
+      <button className='start-button' onClick={() => countdownHandler()}>{timerRunning ? 'PAUSE' : 'START'}</button>
   
     </div>
     <Rounds/>
@@ -51,4 +55,3 @@ const seconds = ((timeLeft%60).toString()).padEnd(2,0);
 }
 
 export default TimerContainer
-
