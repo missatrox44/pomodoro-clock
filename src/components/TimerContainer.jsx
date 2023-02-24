@@ -1,38 +1,53 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import TimerControls from './TimerControls';
+// import TimerControls from './TimerControls';
 import Rounds from './Rounds';
 
-const click = new Audio('./public/click.m4a');
-
+const click = new Audio('./public/click.ogg');
 
 function TimerContainer() {
   const [timeLeft, setTimeLeft] = useState(25*60);
   const [timerRunning, setTimerRunning] = useState(false);
+  const [timerPaused, setTimerPaused] = useState(false);
   useEffect(() => {
       let timer;
       if (timerRunning){
         timer = setInterval(() => {
           setTimeLeft(timeLeft => timeLeft - 1);
         }, 1000)
-        console.log("Here we go!");
       }
       return () => {clearInterval(timer)}
   }, [timerRunning]);
 
   function countdownHandler () {
     click.play();
-    if (timerRunning){
+    if (timerRunning){ // pause the timer
       setTimerRunning(false);
-    } else {
+      setTimerPaused(true);
+    } else { // start the timer
       setTimerRunning(true);
+      setTimerPaused(false);
     }
   }
   
-  function onStartingTimeChange(minutes) {
+  function resetTimer(minutes){
     setTimerRunning(false);
     const seconds = minutes * 60;
     setTimeLeft(seconds);
+  }
+
+  function onStartingTimeChange(minutes) {
+    if (timerRunning || timerPaused){
+      let text = "Are you sure? You will lose your current timer.";
+      if (confirm(text) == true) {
+        resetTimer(minutes);
+        setTimerRunning(false);
+        setTimerPaused(false);
+      } } else {
+        resetTimer(minutes);
+        setTimerRunning(false);
+        setTimerPaused(false);
+      }
   }
   
 function formatTime(timeLeft) {
