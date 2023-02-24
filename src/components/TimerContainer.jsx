@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 // import TimerControls from './TimerControls';
 import Rounds from './Rounds';
 
-const click = new Audio('./public/click.ogg');
+const click = new Audio('./click.ogg');
 
 function TimerContainer() {
   const [timeLeft, setTimeLeft] = useState(25*60);
