@@ -1,9 +1,10 @@
 import React from 'react'
 import Task from './Task'
 import { useState } from 'react'
+import Modal from './Modal'
 
 function TaskContainer() {
-  const [isHideModal, setIsHideModal] = useState(true)
+  const [isHideModal, setIsHideModal] = useState(true);
 
   // setter function 
   return (
