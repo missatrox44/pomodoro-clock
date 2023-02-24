@@ -5,7 +5,6 @@ import Rounds from './Rounds';
 
 const click = new Audio('./public/click.m4a');
 
-
 function TimerContainer() {
   const [timeLeft, setTimeLeft] = useState(25*60);
   const [timerRunning, setTimerRunning] = useState(false);
@@ -15,7 +14,6 @@ function TimerContainer() {
         timer = setInterval(() => {
           setTimeLeft(timeLeft => timeLeft - 1);
         }, 1000)
-        console.log("Here we go!");
       }
       return () => {clearInterval(timer)}
   }, [timerRunning]);
@@ -29,10 +27,20 @@ function TimerContainer() {
     }
   }
   
-  function onStartingTimeChange(minutes) {
+  function resetTimer(minutes){
     setTimerRunning(false);
     const seconds = minutes * 60;
     setTimeLeft(seconds);
+  }
+
+  function onStartingTimeChange(minutes) {
+    if (timerRunning){
+      let text = "Are you sure? You will lose your current timer.";
+      if (confirm(text) == true) {
+        resetTimer(minutes);
+      } } else {
+        resetTimer(minutes);
+      }
   }
   
 function formatTime(timeLeft) {
