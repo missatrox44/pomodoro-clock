@@ -1,11 +1,16 @@
 import React from 'react'
 import Task from './Task'
+import { useState } from 'react'
 
 function TaskContainer() {
+  const [isHideModal, setIsHideModal] = useState(true)
+
+  // setter function 
   return (
     <>
-    <button className="add-task">Add Task</button>
     <Task />
+    <button className="add-task">Add Task</button>
+    <Modal className={`${isHideModal ? 'hidden' : ''}`}/>
   </>
   )
 }

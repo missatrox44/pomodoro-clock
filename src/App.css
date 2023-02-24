@@ -63,3 +63,7 @@ color: var(--text1-light);
 .control-area {
   display: block;
 }
+
+.hidden {
+  display: none;
+}
