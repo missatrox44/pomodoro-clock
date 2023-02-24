@@ -43,11 +43,7 @@ function TimerContainer() {
         resetTimer(minutes);
         setTimerRunning(false);
         setTimerPaused(false);
-      } } else {
-        resetTimer(minutes);
-        setTimerRunning(false);
-        setTimerPaused(false);
-      }
+      } } 
   }
   
 function formatTime(timeLeft) {
