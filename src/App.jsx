@@ -7,15 +7,14 @@ import TimerContainer from "./components/TimerContainer";
 import TaskContainer from "./components/TaskContainer";
 import Modal from "./components/Modal";
 
+
+
 function App() {
-
-
   return (
     <>
       <Header />
-      <TimerContainer  />
+      <TimerContainer />
       <TaskContainer/>
-      
     </>
   );
 }
