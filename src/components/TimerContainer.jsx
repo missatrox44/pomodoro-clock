@@ -48,7 +48,7 @@ function TimerContainer() {
   
 function formatTime(timeLeft) {
 const minutes = Math.floor(timeLeft/60);
-const seconds = ((timeLeft%60).toString()).padEnd(2,0);
+const seconds = ((timeLeft%60).toString()).padStart(2,0);
   return `${minutes}:${seconds}`;
 }
 
