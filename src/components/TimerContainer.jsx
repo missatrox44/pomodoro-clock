@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import TimerControls from './TimerControls';
 import Rounds from './Rounds';
 
+const click = new Audio('./public/click.m4a');
+
+
 function TimerContainer() {
   const [timeLeft, setTimeLeft] = useState(25*60);
   const [timerRunning, setTimerRunning] = useState(false);
@@ -18,6 +21,7 @@ function TimerContainer() {
   }, [timerRunning]);
 
   function countdownHandler () {
+    click.play();
     if (timerRunning){
       setTimerRunning(false);
     } else {
