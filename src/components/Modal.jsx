@@ -22,7 +22,12 @@ function Modal() {
   }
 
   function minusOne() {
-    setRoundsEstimated(roundsEstimated - 1);
+    if (roundsEstimated > 0) {
+      setRoundsEstimated(roundsEstimated - 1);
+    }
+    else {
+      setRoundsEstimated(0)
+    }
   }
 
   function cancel() {
