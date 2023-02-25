@@ -67,3 +67,9 @@ color: var(--text1-light);
 .hidden {
   display: none;
 }
+
+.pomodoro-creation-menu {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid black;
+}
