@@ -31,7 +31,7 @@ function Modal() {
   }
 
   function cancel() {
-    // setIsHideModal(true);
+    setIsHidden(true);
   }
 
   function save() {
@@ -63,8 +63,8 @@ function Modal() {
         <button onClick={minusOne}>-1</button>
       </div>
       <div>
-        <button onClick={cancel}>Cancel</button>
-        <button onClick={save}>Save</button>
+        <button onClick={()=>{cancel()}}>Cancel</button>
+        <button onClick={()=>{save()}}>Save</button>
       </div>
     </div>
   );
