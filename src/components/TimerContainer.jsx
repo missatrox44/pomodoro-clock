@@ -13,7 +13,6 @@ function TimerContainer() {
   
   // I'd prefer to use enums but they don't exist in javascript. If we decide to go full typescript in the future though, we can have nicer things :). https://www.typescriptlang.org/docs/handbook/enums.html
   function modeToMinutes(mode) { 
-
     if (mode === 'pomodoro') {return 25}
     if (mode === 'longBreak') {return 15}
     if (mode === 'shortBreak') {return 5}
@@ -44,6 +43,7 @@ function finishTimer(minutes = 25){
 }
 
   function countdownHandler () {
+    // play button clicked
     click.play();
     if (timerRunning){ // pause the timer
       setTimerRunning(false);
