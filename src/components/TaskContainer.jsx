@@ -1,7 +1,7 @@
-import React from 'react';
-import Task from './Task';
-import { useState } from 'react';
-import Modal from './Modal';
+import React from "react";
+import Task from "./Task";
+import { useState } from "react";
+import Modal from "./Modal";
 
 function TaskContainer() {
   const [isHideModal, setIsHideModal] = useState(true);
@@ -13,10 +13,10 @@ function TaskContainer() {
   return (
     <>
       <Task />
-      <button onClick={showModal} className='add-task'>
+      <button onClick={showModal} className="add-task">
         Add Task
       </button>
-      <div className={`${isHideModal ? 'hidden' : ''}`}>
+      <div className={`${isHideModal ? "hidden" : ""}`}>
         <Modal />
       </div>
     </>
