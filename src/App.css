@@ -2,6 +2,14 @@ html {
   background-color: hsl(var(--brand-hue), var(--brand-saturation), var(--brand-lightness));
 }
 
+.icons {
+  font-size: 3rem;
+  color: var(--brand-color);
+  line-height: 1.3;
+  /* vertical-align: baseline; */
+}
+
+
 button, task {
   border-radius: .3rem;
   border: transparent;
@@ -10,7 +18,7 @@ button, task {
   color: var(--text1-dark);
 }
 
-button:hover {
+button:hover, .mode {
   background-color: var(--surface1-light);
   color: var(--text1-light);
 }
@@ -20,7 +28,8 @@ color: var(--text1-light);
 }
 
 .clock-readout {
-  font-size: 5rem;
+  font-size: 7rem;
+  color: var(--surface3-light);
 }
 
 .top-menu {

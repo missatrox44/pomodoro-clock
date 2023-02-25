@@ -6,9 +6,13 @@
   padding: 2rem;
   text-align: center;
   
+  /*
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  */
+
+  font-family: 'Fire_Code', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 /* Color Theme--notes from article: https://web.dev/building-a-color-scheme/ */
 

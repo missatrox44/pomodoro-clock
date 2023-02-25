@@ -6,18 +6,19 @@ const click = new Audio('./click.ogg');
 const ding = new Audio('./ding.ogg');
 
 function TimerContainer() {
-  const [timerMode, setTimerMode] = useState('longBreak');
+  const [timerMode, setTimerMode] = useState('pomodoro');
   const [secondsLeft, setsecondsLeft] = useState(modeToMinutes(timerMode) * 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
   
   // I'd prefer to use enums but they don't exist in javascript. If we decide to go full typescript in the future though, we can have nicer things :). https://www.typescriptlang.org/docs/handbook/enums.html
   function modeToMinutes(mode) { 
+
     if (mode === 'pomodoro') {return 25}
     if (mode === 'longBreak') {return 15}
     if (mode === 'shortBreak') {return 5}
     return null;
-    }
+  }
   
   useEffect(() => {
       let timer;
@@ -34,6 +35,7 @@ function TimerContainer() {
 
 function finishTimer(minutes = 25){
   if (secondsLeft === 1) { 
+    console.log('Ding!');
     ding.play(); 
     resetTimer(modeToMinutes(timerMode));
     setTimerRunning(false);
@@ -82,13 +84,25 @@ const seconds = ((secondsLeft%60).toString()).padStart(2,0);
   return (
     <div className='TimerContainer'>
     <div className="ControlMenu">
-      <button onClick={() => onStartingTimeChange('pomodoro')}>Pomodoro</button>
-      <button onClick={() => onStartingTimeChange('longBreak')}>Long Break</button>
-      <button onClick={() => onStartingTimeChange('shortBreak')}>Short Break</button>
+      <button 
+        onClick={() => onStartingTimeChange('pomodoro')}
+        className={timerMode === 'pomodoro' ? 'mode' : ''}
+      >Pomodoro</button>
+      <button 
+        onClick={() => onStartingTimeChange('longBreak')}
+        className={timerMode === 'longBreak' ? 'mode' : ''}
+      >Long Break</button>
+      <button 
+        onClick={() => onStartingTimeChange('shortBreak')}
+        className={timerMode === 'shortBreak' ? 'mode' : ''}
+      >Short Break</button>
     </div>
-    <span className='clock-readout'>{ (formatTime(secondsLeft)).padStart(2,'0') }</span>
+      <span className='clock-readout'>{ (formatTime(secondsLeft)).padStart(2,'0') }</span>
     <div>
-      <button className='start-button' onClick={() => countdownHandler()}>{timerRunning ? 'PAUSE' : 'START'}</button>
+      <button className='start-button' onClick={() => countdownHandler()}>{timerRunning ? 
+        <span className="material-icons icons">pause</span> : 
+        <span className="material-icons icons">play_arrow</span>
+      }</button>
   
     </div>
     <Rounds/>
