@@ -1,23 +1,47 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-// import TimerControls from './TimerControls';
 import Rounds from './Rounds';
 
-const click = new Audio('./public/click.ogg');
+const click = new Audio('./click.ogg');
+const ding = new Audio('./ding.ogg');
 
 function TimerContainer() {
-  const [timeLeft, setTimeLeft] = useState(25*60);
+  const [timerMode, setTimerMode] = useState('pomodoro');
+  const [secondsLeft, setsecondsLeft] = useState(modeToMinutes(timerMode) * 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
+  
+  // I'd prefer to use enums but they don't exist in javascript. If we decide to go full typescript in the future though, we can have nicer things :). https://www.typescriptlang.org/docs/handbook/enums.html
+  function modeToMinutes(mode) { 
+
+    if (mode === 'pomodoro') {return 25}
+    if (mode === 'longBreak') {return 15}
+    if (mode === 'shortBreak') {return 5}
+    return null;
+  }
+  
   useEffect(() => {
       let timer;
-      if (timerRunning){
+      if (timerRunning && secondsLeft > 0){
         timer = setInterval(() => {
-          setTimeLeft(timeLeft => timeLeft - 1);
-        }, 1000)
+          setsecondsLeft(secondsLeft => secondsLeft - 1);
+          finishTimer(modeToMinutes(timerMode));
+        }, 1000);
       }
-      return () => {clearInterval(timer)}
-  }, [timerRunning]);
+      return () => {
+        clearInterval(timer); 
+      }
+  }, [timerRunning, secondsLeft]);
+
+function finishTimer(minutes = 25){
+  if (secondsLeft === 1) { 
+    console.log('Ding!');
+    ding.play(); 
+    resetTimer(modeToMinutes(timerMode));
+    setTimerRunning(false);
+    setTimerPaused(false);
+  }
+}
 
   function countdownHandler () {
     click.play();
@@ -33,10 +57,11 @@ function TimerContainer() {
   function resetTimer(minutes){
     setTimerRunning(false);
     const seconds = minutes * 60;
-    setTimeLeft(seconds);
+    setsecondsLeft(seconds);
   }
 
-  function onStartingTimeChange(minutes) {
+  function onStartingTimeChange(mode) {
+    const minutes = modeToMinutes(mode);
     if (timerRunning || timerPaused){
       let text = "Are you sure? You will lose your current timer.";
       if (confirm(text) == true) {
@@ -50,22 +75,34 @@ function TimerContainer() {
       }
   }
   
-function formatTime(timeLeft) {
-const minutes = Math.floor(timeLeft/60);
-const seconds = ((timeLeft%60).toString()).padEnd(2,0);
+function formatTime(secondsLeft) {
+const minutes = Math.floor(secondsLeft/60);
+const seconds = ((secondsLeft%60).toString()).padStart(2,0);
   return `${minutes}:${seconds}`;
 }
 
   return (
     <div className='TimerContainer'>
     <div className="ControlMenu">
-      <button onClick={() => onStartingTimeChange(25)}>Pomodoro</button>
-      <button onClick={() => onStartingTimeChange(5)}>Short Break</button>
-      <button onClick={() => onStartingTimeChange(15)}>Long Break</button>
+      <button 
+        onClick={() => onStartingTimeChange('pomodoro')}
+        className={timerMode === 'pomodoro' ? 'mode' : ''}
+      >Pomodoro</button>
+      <button 
+        onClick={() => onStartingTimeChange('longBreak')}
+        className={timerMode === 'longBreak' ? 'mode' : ''}
+      >Long Break</button>
+      <button 
+        onClick={() => onStartingTimeChange('shortBreak')}
+        className={timerMode === 'shortBreak' ? 'mode' : ''}
+      >Short Break</button>
     </div>
-    <span className='clock-readout'>{ (formatTime(timeLeft)).padStart(2,'0') }</span>
+      <span className='clock-readout'>{ (formatTime(secondsLeft)).padStart(2,'0') }</span>
     <div>
-      <button className='start-button' onClick={() => countdownHandler()}>{timerRunning ? 'PAUSE' : 'START'}</button>
+      <button className='start-button' onClick={() => countdownHandler()}>{timerRunning ? 
+        <span className="material-icons icons">pause</span> : 
+        <span className="material-icons icons">play_arrow</span>
+      }</button>
   
     </div>
     <Rounds/>
