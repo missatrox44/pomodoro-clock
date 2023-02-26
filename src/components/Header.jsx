@@ -3,7 +3,9 @@ import React from 'react'
 function Header() {
   return (
     <nav className='top-menu'>
-    <span>Pomodoro Timer</span>
+    <div className='title-wrapper'>
+      <span className='menu-title'>Pomodoro Timer</span>
+    </div>
     <div>
       <button>Report</button>
       <button>Setting</button>

@@ -68,8 +68,9 @@ function TaskContainer() {
       </button>
 
       <div className={`${isHideModal ? "hidden" : ""}`}>
-        <div className="pomodoro-creation-menu">
+        <div className="modal">
           <p>Est Pomodoros</p>
+
           <div>
             <form onSubmit={handleSubmit}>
               <input
@@ -77,17 +78,19 @@ function TaskContainer() {
                 placeholder="What are you working on?"
                 value={name}
                 onChange={handleNameChange}
+                className="input-field"
               />
               <input
                 type="number"
                 value={estimated}
                 onChange={handleEstimatedChange}
+                className="input-field"
               />
               <button type="button" onClick={minusOne}>
-                -1
+                <span className="material-icons icons">arrow_drop_down</span>
               </button>
               <button type="button" onClick={addOne}>
-                +1
+               <span className="material-icons icons">arrow_drop_up</span>
               </button>
               <button onClick={cancelBtnClicked}>Cancel</button>
               <button type="submit">Save</button>

@@ -5,7 +5,9 @@ function Rounds() {
  const [roundsCompleted, setRoundsCompleted] = useState(0)
 
   return (
-    <div>Rounds</div>
+    <div className="rounds-completed">
+      <span>Rounds</span>
+    </div>
   )
 }
 
