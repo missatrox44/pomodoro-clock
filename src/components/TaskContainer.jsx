@@ -59,31 +59,39 @@ function TaskContainer() {
       
       <p>Est Pomodoros</p>
       <div>
-        <form>
-      <input
-        type="text"
-        className="input-field"
-        name="task"
-        placeholder="What are you working on?"
-        onChange={handleChange}
-        value={taskData.name}
-      />
+      <form>
+
+      {/* https://dev.to/deboragaleano/how-to-handle-multiple-inputs-in-react-55el */}
+
         <input
           type="text"
           className="input-field"
-          name="num"
-          placeholder="1"
+          name="task"
+          placeholder="What are you working on?"
           onChange={handleChange}
-          value={taskData.estimated}
+          value={taskData.name}
         />
+          <input
+            type="text"
+            className="input-field"
+            name="num"
+            placeholder="1"
+            onChange={handleChange}
+            value={taskData.estimated}
+          />
+          <button onClick={addOne}>+1</button>
+          <button onClick={minusOne}>-1</button>
+          
+          <div>
+            <button onClick={()=>{cancel()}}>Cancel</button>
+            <button onClick={()=>{save()}}>Save</button>
+          </div>
+
         </form>
-        <button onClick={addOne}>+1</button>
-        <button onClick={minusOne}>-1</button>
+
+
       </div>
-      <div>
-        <button onClick={()=>{cancel()}}>Cancel</button>
-        <button onClick={()=>{save()}}>Save</button>
-      </div>
+
     </div>
       </div>
 
