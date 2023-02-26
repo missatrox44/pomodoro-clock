@@ -1,7 +1,7 @@
 :root {
   
   margin: 0 auto;
-  
+
   max-width: 1280px;
   padding: 2rem;
   text-align: center;
@@ -12,8 +12,8 @@
   font-weight: 400;
   */
 
-  font-family: 'Fire_Code', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
+  font-family: 'Roboto Mono', monospace;
+  
 /* Color Theme--notes from article: https://web.dev/building-a-color-scheme/ */
 
   --black: hsl(0, 48%, 47%);
@@ -57,4 +57,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+input, textarea, p {
+  font-family:inherit;
+  font-size: inherit;
 }

@@ -37,6 +37,17 @@ color: var(--text1-light);
   justify-content: space-between;
 }
 
+.title-wrapper {
+  display: inline-block;
+}
+
+.menu-title {
+  font-size: 1.2rem;
+  color: var(--surface1-light);
+  vertical-align: middle;
+
+}
+
 .task-list-item {
   display: flex;
   -webkit-box-align: center;
@@ -45,7 +56,7 @@ color: var(--text1-light);
   justify-content: space-between;
   width: 80%;
   background-color: var(--surface3-light);
-  margin: 1rem;
+  margin: 2rem auto;
   padding: 1rem;
   border-radius: .3rem;
 }
@@ -77,8 +88,55 @@ color: var(--text1-light);
   display: none;
 }
 
-.pomodoro-creation-menu {
+.modal {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  border: 3px solid black;
+  background-color: var(--surface2-light);
+  border-radius: 1rem;
+  min-width: 20rem;
+  max-width: 25rem;
+  margin: 1rem auto;
+  box-shadow: .5rem .5rem .5rem .5rem rgba(0,0,0,0.1);
+}
+
+.modal button {
+  background-color: hsl(0, 0%, 15%);
+  color: var(--surface3-light);
+  margin-left: .5rem;
+  margin-left: .5rem;
+  padding: .5rem;
+  margin-top: 1rem;
+}
+
+.modal button:hover {
+  background-color: hsl(0, 20%, 5%);
+  color: var(--surface3-light);
+}
+
+.modal .icons {
+  font-size: 1rem;
+  color: var(--surface3-light);
+}
+
+.modal input {
+
+  box-shadow: .5rem .5rem .5rem .5rem rgba(0,0,0,0.1);
+  border-radius: .3rem;
+  border:0;
+  padding: .5rem;
+}
+
+.modal input:active {
+  border: 0;
+}
+
+.rounds-completed {
+
+  margin: 2rem; 
+}
+
+.rounds-completed span {
+  color: var(--surface1-light);
+  font-size: 1.2rem;
 }
