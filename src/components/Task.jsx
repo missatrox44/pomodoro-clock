@@ -1,6 +1,6 @@
 import React from "react";
 
-function Task({ name, estimated, actual, completed }) {
+function Task({ name, estimated, actual, completed, showModal }) {
   return (
     <div className="task-list-item">
       <span>{name}</span>
@@ -8,7 +8,9 @@ function Task({ name, estimated, actual, completed }) {
         {actual}/{estimated}
       </span>
       <span>{completed ? "Completed" : "In progress"}</span>
-      <span className="material-icons">menu_open</span>
+      <span onClick={() => showModal("edit")} className="material-icons">
+        menu_open
+      </span>
     </div>
   );
 }

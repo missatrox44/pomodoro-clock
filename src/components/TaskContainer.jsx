@@ -5,12 +5,17 @@ import { v4 } from "uuid";
 
 function TaskContainer() {
   const [isHideModal, setIsHideModal] = useState(true);
+  const [isHideEditModal, setIsHideEditModal] = useState(true);
   const [name, setName] = useState("");
   const [estimated, setEstimated] = useState(1);
   const [tasksList, setTasksList] = useState([]);
 
-  function showModal() {
-    setIsHideModal(false);
+  function showModal(modalType) {
+    if (modalType === "edit") {
+      setIsHideEditModal(false);
+    } else {
+      setIsHideModal(false);
+    }
   }
 
   function handleNameChange(event) {
@@ -47,6 +52,11 @@ function TaskContainer() {
     console.log("pressed cancel button");
   }
 
+  function deleteBtnClicked() {
+    setIsHideModal(true);
+    console.log("pressed delete button");
+  }
+
   const tasks = tasksList.map((task) => {
     return (
       <Task
@@ -55,6 +65,7 @@ function TaskContainer() {
         actual={task.actual}
         completed={task.completed}
         id={v4()}
+        showModal={showModal}
       />
     );
   });
@@ -62,14 +73,13 @@ function TaskContainer() {
   return (
     <div className="task-container">
       {tasks}
-      <button onClick={showModal} className="add-task">
+      <button onClick={() => showModal()} className="add-task">
         Add Task
       </button>
 
       <div className={`${isHideModal ? "hidden" : ""}`}>
         <div className="modal">
           <p>Est Pomodoros</p>
-
           <div>
             <form onSubmit={handleSubmit}>
               <input
@@ -95,6 +105,46 @@ function TaskContainer() {
               <button type="submit">Save</button>
             </form>
           </div>
+        </div>
+      </div>
+
+      <div className={`${isHideEditModal ? "hidden" : ""}`}>
+        <div className="modal">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="What are you working on?"
+              value={name}
+              onChange={handleNameChange}
+              className="input-field"
+            />
+            <br />
+            <span>Act/Estimated Pomodoros</span>
+            <br />
+            <input
+              type="number"
+              //TODO
+              // value={actual}
+              onChange={handleEstimatedChange}
+              className="input-field"
+            />
+            /
+            <input
+              type="number"
+              value={estimated}
+              onChange={handleEstimatedChange}
+              className="input-field"
+            />
+            <button type="button" onClick={minusOne}>
+              <span className="material-icons icons">arrow_drop_down</span>
+            </button>
+            <button type="button" onClick={addOne}>
+              <span className="material-icons icons">arrow_drop_up</span>
+            </button>
+            <button onClick={deleteBtnClicked}>Delete</button>
+            <button onClick={cancelBtnClicked}>Cancel</button>
+            <button type="submit">Save</button>
+          </form>
         </div>
       </div>
     </div>
