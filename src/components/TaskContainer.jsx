@@ -3,17 +3,86 @@ import Task from "./Task";
 import { useState } from "react";
 import { v4 } from "uuid";
 
+
+
 function TaskContainer() {
   const [isHideModal, setIsHideModal] = useState(true);
   const [isHideEditModal, setIsHideEditModal] = useState(true);
   const [name, setName] = useState("");
   const [estimated, setEstimated] = useState(1);
   const [tasksList, setTasksList] = useState([]);
+  const [id, setId] = useState(null);
+
+  function modalHandler(type, id){
+    showModal(type);
+    console.log("This is setId from modalHandler: " + id)
+    setId(id);
+  }
+  
+  function EditModal() {
+    // This is the edit modal... 
+    // We need to pass the taskItem data into this modal 
+
+    const task = tasksList.find((task) => 
+    {
+      console.log(task.id === id);
+      console.log("task id: " + task.id+" ? state id: "+id)
+      return (
+        task.id === id 
+        )}
+    );
+
+    
+    console.log("Task: " + task)
+    // name, estimated, actual, completed, id, modalHandler
+    return (
+  
+  <div className="modal edit-modal">
+  <form onSubmit={handleSubmit}>
+    <input
+      type="text"
+      // placeholder={task.name}
+      value={name}
+      onChange={handleNameChange}
+      className="input-field"
+    />
+    <br />
+    <span>Act/Estimated Pomodoros</span>
+    <br />
+    <input
+      type="number"
+      //TODO
+      // value={actual}
+      onChange={handleEstimatedChange}
+      className="input-field"
+    />
+    <span>/</span>
+    <input
+      type="number"
+      value={estimated}
+      onChange={handleEstimatedChange}
+      className="input-field"
+    />
+    <button type="button" onClick={minusOne}>
+      <span className="material-icons icons">arrow_drop_down</span>
+    </button>
+    <button type="button" onClick={addOne}>
+      <span className="material-icons icons">arrow_drop_up</span>
+    </button>
+    <button onClick={()=>deleteBtnClicked(id)}>Delete</button>
+    <button onClick={cancelBtnClicked}>Cancel</button>
+    <button type="submit">Save</button>
+  </form>
+</div>
+    )
+  }
 
   function showModal(modalType) {
     if (modalType === "edit") {
+      console.log("Showing the edit modal.")
       setIsHideEditModal(false);
     } else {
+      console.log("Showing the modal.")
       setIsHideModal(false);
     }
   }
@@ -40,7 +109,9 @@ function TaskContainer() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const task = { name, estimated, actual: 0, completed: false };
+    // name, estimated, actual, completed, id,
+    const id = v4()
+    const task = { name, estimated, actual: 0, completed: false, id:id};
     setTasksList([...tasksList, task]);
     setName("");
     setEstimated(1);
@@ -49,12 +120,12 @@ function TaskContainer() {
 
   function cancelBtnClicked() {
     setIsHideModal(true);
-    console.log("pressed cancel button");
+    console.log("Pressed cancel button.");
   }
 
-  function deleteBtnClicked() {
-    setIsHideModal(true);
-    console.log("pressed delete button");
+  function deleteBtnClicked(taskToDelete) {
+    setIsHideEditModal(true);
+    console.log("Deleting " + taskToDelete);
   }
 
   const tasks = tasksList.map((task) => {
@@ -64,8 +135,9 @@ function TaskContainer() {
         estimated={task.estimated}
         actual={task.actual}
         completed={task.completed}
-        id={v4()}
-        showModal={showModal}
+        id={id}
+        modalHandler={modalHandler}
+        key={id}
       />
     );
   });
@@ -77,7 +149,7 @@ function TaskContainer() {
         Add Task
       </button>
 
-      <div className={`${isHideModal ? "hidden" : ""}`}>
+      <div className={isHideModal ? "hidden" : ""}>
         <div className="modal">
           <p>Est Pomodoros</p>
           <div>
@@ -108,45 +180,10 @@ function TaskContainer() {
         </div>
       </div>
 
-      <div className={`${isHideEditModal ? "hidden" : ""}`}>
-        <div className="modal">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="What are you working on?"
-              value={name}
-              onChange={handleNameChange}
-              className="input-field"
-            />
-            <br />
-            <span>Act/Estimated Pomodoros</span>
-            <br />
-            <input
-              type="number"
-              //TODO
-              // value={actual}
-              onChange={handleEstimatedChange}
-              className="input-field"
-            />
-            /
-            <input
-              type="number"
-              value={estimated}
-              onChange={handleEstimatedChange}
-              className="input-field"
-            />
-            <button type="button" onClick={minusOne}>
-              <span className="material-icons icons">arrow_drop_down</span>
-            </button>
-            <button type="button" onClick={addOne}>
-              <span className="material-icons icons">arrow_drop_up</span>
-            </button>
-            <button onClick={deleteBtnClicked}>Delete</button>
-            <button onClick={cancelBtnClicked}>Cancel</button>
-            <button type="submit">Save</button>
-          </form>
-        </div>
-      </div>
+      <div className={isHideEditModal ? "hidden" : ""}>
+        <EditModal id={id}/>
+     </div>
+
     </div>
   );
 }
