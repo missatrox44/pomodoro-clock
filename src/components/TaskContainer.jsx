@@ -135,9 +135,9 @@ function TaskContainer() {
         estimated={task.estimated}
         actual={task.actual}
         completed={task.completed}
-        id={id}
+        id={task.id}
         modalHandler={modalHandler}
-        key={id}
+        key={task.id}
       />
     );
   });
@@ -181,7 +181,7 @@ function TaskContainer() {
       </div>
 
       <div className={isHideEditModal ? "hidden" : ""}>
-        <EditModal id={id}/>
+        <EditModal />
      </div>
 
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 
 function Task({ name, estimated, actual, completed, id, modalHandler }) {
-
+  console.log("This is id from Task function: " + id);
   return (
     <div className="task-list-item" id={id}>
       <span>{name}</span>
