@@ -8,8 +8,10 @@ function TaskContainer() {
   const [isHideEditModal, setIsHideEditModal] = useState(true);
   const [name, setName] = useState("");
   const [estimated, setEstimated] = useState(1);
-  const [tasksList, setTasksList] = useState([]);
-  const [id, setId] = useState(null);
+  const placeholderId = v4()
+  // name, estimated, actual, completed, id, modalHandler
+  const [tasksList, setTasksList] = useState([{name:'Rename Me', estimated:1, actual:0, completed: false, id: placeholderId, modalHandler: modalHandler}]);
+  const [id, setId] = useState(placeholderId);
 
   function modalHandler(type, id){
     showModal(type);
