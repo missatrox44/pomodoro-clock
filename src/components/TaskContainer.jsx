@@ -3,8 +3,6 @@ import Task from "./Task";
 import { useState } from "react";
 import { v4 } from "uuid";
 
-
-
 function TaskContainer() {
   const [isHideModal, setIsHideModal] = useState(true);
   const [isHideEditModal, setIsHideEditModal] = useState(true);
@@ -15,25 +13,18 @@ function TaskContainer() {
 
   function modalHandler(type, id){
     showModal(type);
-    console.log("This is setId from modalHandler: " + id)
-    setId(id);
+    setId(id); // Once a user clicks on the open_list icon in the editModal, it will call this function, which will call setId(id), making that list item's id available in the state, so that it can be consumed by other components.
   }
   
   function EditModal() {
-    // This is the edit modal... 
-    // We need to pass the taskItem data into this modal 
-
     const task = tasksList.find((task) => 
-    {
-      console.log(task.id === id);
-      console.log("task id: " + task.id+" ? state id: "+id)
-      return (
-        task.id === id 
-        )}
-    );
+    { 
+      console.log(task.id + "\n" + id);
+      console.log("Match? " + (task.id === id));
+      return (task.id === id )}
+    ); // Here we use the array method array.find() to search the tasksList for the task that matches the current working (state) id. Once we have that task, we can render its properties in this component...
 
-    
-    console.log("Task: " + task)
+    console.log("Task: " + task.name)
     // name, estimated, actual, completed, id, modalHandler
     return (
   
@@ -41,18 +32,19 @@ function TaskContainer() {
   <form onSubmit={handleSubmit}>
     <input
       type="text"
-      // placeholder={task.name}
+      placeholder={task.name}
       value={name}
       onChange={handleNameChange}
       className="input-field"
     />
     <br />
-    <span>Act/Estimated Pomodoros</span>
+    <span>{task.actual}/{task.estimated} Pomodoros</span>
     <br />
     <input
       type="number"
       //TODO
       // value={actual}
+      placeholder={task.actual}
       onChange={handleEstimatedChange}
       className="input-field"
     />
@@ -60,6 +52,7 @@ function TaskContainer() {
     <input
       type="number"
       value={estimated}
+      placeholder={task.estimated}
       onChange={handleEstimatedChange}
       className="input-field"
     />
@@ -110,8 +103,8 @@ function TaskContainer() {
   function handleSubmit(event) {
     event.preventDefault();
     // name, estimated, actual, completed, id,
-    const id = v4()
-    const task = { name, estimated, actual: 0, completed: false, id:id};
+    const newId = v4()
+    const task = { name, estimated, actual: 0, completed: false, id:newId};
     setTasksList([...tasksList, task]);
     setName("");
     setEstimated(1);
