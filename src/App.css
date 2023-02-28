@@ -35,6 +35,7 @@ color: var(--text1-light);
 .top-menu {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2rem;
 }
 
 .title-wrapper {
@@ -46,6 +47,10 @@ color: var(--text1-light);
   color: var(--surface1-light);
   vertical-align: middle;
 
+}
+
+.menu-title, a {
+  text-decoration: none;
 }
 
 .task-list-item {
@@ -139,4 +144,35 @@ color: var(--text1-light);
 .rounds-completed span {
   color: var(--surface1-light);
   font-size: 1.2rem;
+}
+
+.avatar {
+  border-radius: 35px;
+  margin-left: 10px;
+}
+
+
+.task-input-field {
+  width: 100%;
+
+}
+
+.num-input-field {
+  width: 50px;
+  height: 50px;
+}
+
+.left {
+  text-align: left;
+  
+}
+
+.est-div {
+  display: flex;
+  justify-content: start;
+}
+
+.button-div {
+  display: flex;
+  justify-content: end;
 }
