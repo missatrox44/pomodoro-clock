@@ -5,8 +5,8 @@ import Rounds from "./Rounds";
 const click = new Audio("./click.ogg");
 const ding = new Audio("./ding.ogg");
 
-function TimerContainer({ setRoundsCompleted, roundsCompleted }) {
-  const [timerMode, setTimerMode] = useState("pomodoro");
+function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTimerMode }) {
+  // const [timerMode, setTimerMode] = useState("pomodoro");
   const [secondsLeft, setsecondsLeft] = useState(modeToMinutes(timerMode) * 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
