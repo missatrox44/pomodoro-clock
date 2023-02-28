@@ -38,9 +38,7 @@ function TaskContainer({ roundsCompleted }) {
   }
   
   const [id, setId] = useState(placeholderId);
-  // name, estimated, initial, final, completed, id, modalHandler
-  const [tasksList, setTasksList] = useState([{name:'Rename Me', estimated:1, initial:roundsCompleted, final:0, completed: false, id: placeholderId, modalHandler: modalHandler}]);
-  
+
 // task.initial = tasksList[task.]task.final + 1.
 
 function getFinal(){
@@ -54,7 +52,6 @@ function getInitialById(id){
 }
 
 
-  const [id, setId] = useState(placeholderId);
   function modalHandler(type, id) {
     showModal(type);
     setId(id); // Once a user clicks on the open_list icon in the editModal, it will call this function, which will call setId(id), making that list item's id available in the state, so that it can be consumed by other components.
