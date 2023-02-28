@@ -21,28 +21,28 @@ function TaskContainer({ roundsCompleted }) {
     },
   ]);
 
-  function getFinal(){
+  function getFinal() {
     return roundsCompleted;
   }
-  
-  function getInitialById(id){
+
+  function getInitialById(id) {
     const task = getTaskById(id);
     const index = indexOf(task);
-    return tasksList[task - 1 ? task-1 : 0].final + 1.
+    return tasksList[task - 1 ? task - 1 : 0].final + 1;
   }
-  
+
   const [id, setId] = useState(placeholderId);
 
-function getFinal(){
-  return roundsCompleted;
-}
+  function getFinal() {
+    return roundsCompleted;
+  }
 
-function getInitialById(id){
-  const task = getTaskById(id);
-  const index = indexOf(task);
-  return tasksList[task-1? task-1 : -1].final + 1;
-// checks if there is a previous task in tasksList. If there is, returns the task.final value from that previous task, +1. If there is no previous task, then it returns 0 (-1 + 1).
-}
+  function getInitialById(id) {
+    const task = getTaskById(id);
+    const index = indexOf(task);
+    return tasksList[task - 1 ? task - 1 : -1].final + 1;
+    // checks if there is a previous task in tasksList. If there is, returns the task.final value from that previous task, +1. If there is no previous task, then it returns 0 (-1 + 1).
+  }
 
   function modalHandler(type, id) {
     showModal(type);
@@ -56,45 +56,61 @@ function getInitialById(id){
     return task;
   }
 
-  function actual(id){ 
+  function actual(id) {
     // This function checks whether the task is completed and returns the correct number...
     const task = getTaskById(id);
-    return task.completed? task.final-task.roundsCompleted : task.roundsCompleted-task.initial 
+    return task.completed
+      ? task.final - task.roundsCompleted
+      : task.roundsCompleted - task.initial;
   }
 
-// EDIT MODAL
-function EditModal() {
-  const task = getTaskById(id);
-  return (
-    <div className="modal edit-modal">
-    <form onSubmit={handleSubmit}>
-      <input type="text" placeholder={task.name}value={name} onChange={handleNameChange}className="input-field"
-      />
-      <br />
-      
-      <span>{actual(id)}/{task.estimated} Pomodoros</span>
-      <br />
-      <input
-        type="number" placeholder={actual(id).toString()} onChange={handleEstimatedChange} className="input-field"
-        // value={actual}
-      />
-      <span>/</span>
-      <input
-        type="number" value={estimated} placeholder={task.estimated} onChange={handleEstimatedChange}className="input-field"
-      />
-      <button type="button" onClick={minusOne}>
-        <span className="material-icons icons">arrow_drop_down</span>
-      </button>
-      <button type="button" onClick={addOne}>
-        <span className="material-icons icons">arrow_drop_up</span>
-      </button>
-      <button onClick={()=>deleteBtnClicked(id)}>Delete</button>
-      <button onClick={(e) => cancelBtnClicked(e)}>Cancel</button>
-      <button type="submit">Save</button>
-    </form>
-  </div>
-  )
-};
+  // EDIT MODAL
+  function EditModal() {
+    const task = getTaskById(id);
+    return (
+      <div className="modal edit-modal">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder={task.name}
+            value={name}
+            onChange={handleNameChange}
+            className="input-field"
+          />
+          <br />
+
+          <span>
+            {actual(id)}/{task.estimated} Pomodoros
+          </span>
+          <br />
+          <input
+            type="number"
+            placeholder={actual(id).toString()}
+            onChange={handleEstimatedChange}
+            className="input-field"
+            // value={actual}
+          />
+          <span>/</span>
+          <input
+            type="number"
+            value={estimated}
+            placeholder={task.estimated}
+            onChange={handleEstimatedChange}
+            className="input-field"
+          />
+          <button type="button" onClick={minusOne}>
+            <span className="material-icons icons">arrow_drop_down</span>
+          </button>
+          <button type="button" onClick={addOne}>
+            <span className="material-icons icons">arrow_drop_up</span>
+          </button>
+          <button onClick={() => deleteBtnClicked(id)}>Delete</button>
+          <button onClick={(e) => cancelBtnClicked(e)}>Cancel</button>
+          <button type="submit">Save</button>
+        </form>
+      </div>
+    );
+  }
 
   function showModal(modalType) {
     if (modalType === "edit") {
@@ -142,8 +158,16 @@ function EditModal() {
   function handleSubmit(e) {
     e.preventDefault();
     // name, estimated, actual, completed, id,
-    const newId = v4()
-    const task = { name, estimated, initial: 0, final: 0, completed: false, id:newId, running: false };
+    const newId = v4();
+    const task = {
+      name,
+      estimated,
+      initial: 0,
+      final: 0,
+      completed: false,
+      id: newId,
+      running: false,
+    };
     setTasksList([...tasksList, task]);
     setName("");
     setEstimated(1);
@@ -163,6 +187,33 @@ function EditModal() {
     // setTasksList(newList);
   }
 
+  function completeTask(task) {
+    // const task = getTaskById(id);
+    task.completed(!completed);
+    const initial = getInitialById(id);
+    const final = getFinal();
+    return task;
+  }
+
+  function editItem(id, array, func) {
+    const task = getTaskById(id);
+    const index = array.indexOf(task);
+    const arrayStart = array.slice(0, index - 1);
+    if (func) {
+      const editedTask = func(id, array);
+    }
+    const arrayEnd = array.slice(index + 1, -1);
+    const midArray = arrayStart.concat(editedTask);
+    const editedArray = midArray.concat(arrayEnd);
+    return editedArray;
+  }
+
+  // TODO
+  function completedHandler(id) {
+    const task = getTaskById(id);
+    setTasksList(editItem(id,array, completeTask))
+  }
+
   const tasks = tasksList.map((task) => {
     return (
       <Task
@@ -174,7 +225,9 @@ function EditModal() {
         id={task.id}
         modalHandler={modalHandler}
         roundsCompleted={roundsCompleted}
+        completedHandler={completedHandler}
         key={task.id}
+        
       />
     );
   });
@@ -200,23 +253,23 @@ function EditModal() {
               />
               <p className="left">Est Pomodoros</p>
               <div className="est-div">
-              <input
-                type="number"
-                value={estimated}
-                onChange={handleEstimatedChange}
-                className="num-input-field"
-              />
-              <button type="button" onClick={minusOne}>
-                <span className="material-icons icons">arrow_drop_down</span>
-              </button>
-              <button type="button" onClick={addOne}>
-                <span className="material-icons icons">arrow_drop_up</span>
-              </button>
+                <input
+                  type="number"
+                  value={estimated}
+                  onChange={handleEstimatedChange}
+                  className="num-input-field"
+                />
+                <button type="button" onClick={minusOne}>
+                  <span className="material-icons icons">arrow_drop_down</span>
+                </button>
+                <button type="button" onClick={addOne}>
+                  <span className="material-icons icons">arrow_drop_up</span>
+                </button>
               </div>
-              <br/>
+              <br />
               <div className="button-div">
-              <button onClick={(e) => cancelBtnClicked(e)}>Cancel</button>
-              <button type="submit">Save</button>
+                <button onClick={(e) => cancelBtnClicked(e)}>Cancel</button>
+                <button type="submit">Save</button>
               </div>
             </form>
           </div>
