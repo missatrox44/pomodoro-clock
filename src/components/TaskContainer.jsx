@@ -110,7 +110,7 @@ function deleteItem(id, array){
     e.preventDefault();
     // name, estimated, actual, completed, id,
     const newId = v4()
-    const task = { name, estimated, actual: 0, completed: false, id:newId };
+    const task = { name, estimated, actual: 0, completed: false, id:newId, running: false };
     setTasksList([...tasksList, task]);
     setName("");
     setEstimated(1);

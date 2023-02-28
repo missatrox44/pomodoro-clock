@@ -39,7 +39,8 @@ function finishTimer(minutes = 25){
     resetTimer(modeToMinutes(timerMode));
     setTimerRunning(false);
     setTimerPaused(false);
-    setRoundsCompleted(roundsCompleted+1);
+    console.log(timerMode);
+    if (timerMode === 'pomodoro'){setRoundsCompleted(roundsCompleted+1);}
   }
 }
 
@@ -62,6 +63,7 @@ function finishTimer(minutes = 25){
   }
 
   function onStartingTimeChange(mode) {
+    setTimerMode(mode);
     const minutes = modeToMinutes(mode);
     if (timerRunning || timerPaused){
       let text = "Are you sure? You will lose your current timer.";
