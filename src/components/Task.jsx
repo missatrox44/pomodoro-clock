@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Task({ name, estimated, actual, completed, id, modalHandler }) {
+function Task({ name, estimated, initial, final, completed, id, modalHandler, roundsCompleted }) {
   console.log("This is id from Task function: " + id);
 
   const [isComplete, setIsComplete] = useState(false);
@@ -19,7 +19,7 @@ function Task({ name, estimated, actual, completed, id, modalHandler }) {
       </div>
       <span>{name}</span>
       <span>
-        {actual}/{estimated}
+        {completed? final-roundsCompleted : roundsCompleted-initial}/{estimated}
       </span>
       <span>{completed ? "Completed" : "In progress"}</span>
       {/* <span 

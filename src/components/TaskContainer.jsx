@@ -2,7 +2,9 @@ import Task from "./Task";
 import { React, useState } from "react";
 import { v4 } from "uuid";
 
+
 // Okay so here's my idea on how to complete this whole tracking of roundsCompleted per Task--I think we can just calculate them based on current state. My idea is to mark the roundsCompleted when a Task is created, replacing the task.actual value with a task.initial value. Then wherever we want to reference the "actual" rounds completed, we can merely write roundsCompleted - task.initial. Then when it is marked as complete, we can create another state called task.final (which is roundsCompleted when the task is decommissioned), and task.final - task.initial should give the completed tasks their historical number of completedRounds per task. 
+
 
 function TaskContainer({ roundsCompleted }) {
   const [isHideModal, setIsHideModal] = useState(true);
@@ -22,6 +24,7 @@ function TaskContainer({ roundsCompleted }) {
       modalHandler: modalHandler,
     },
   ]);
+
   // task.initial = tasksList[task.]task.final + 1.
 
   function getFinal(){
@@ -33,6 +36,23 @@ function TaskContainer({ roundsCompleted }) {
     const index = indexOf(task);
     return tasksList[task - 1 ? task-1 : 0].final + 1.
   }
+  
+  const [id, setId] = useState(placeholderId);
+  // name, estimated, initial, final, completed, id, modalHandler
+  const [tasksList, setTasksList] = useState([{name:'Rename Me', estimated:1, initial:roundsCompleted, final:0, completed: false, id: placeholderId, modalHandler: modalHandler}]);
+  
+// task.initial = tasksList[task.]task.final + 1.
+
+function getFinal(){
+  return roundsCompleted;
+}
+
+function getInitialById(id){
+  const task = getTaskById(id);
+  const index = indexOf(task);
+  return tasksList[task - 1 ? task-1 : 0].final + 1.
+}
+
 
   const [id, setId] = useState(placeholderId);
   function modalHandler(type, id) {
@@ -47,10 +67,13 @@ function TaskContainer({ roundsCompleted }) {
     return task;
   }
 
+
   function actual(id){ 
     const task = getTaskById(id);
     console.log("Actual rounds completed: " + task.completed ? task.final-task.roundsCompleted : task.roundsCompleted-task.initial )
     return task.completed? task.final-task.roundsCompleted : task.roundsCompleted-task.initial // This function checks whether the task is completed and returns the correct number...
+
+
   }
 
 // EDIT MODAL
@@ -133,15 +156,8 @@ function EditModal() {
   function handleSubmit(e) {
     e.preventDefault();
     // name, estimated, actual, completed, id,
-    const newId = v4();
-    const task = {
-      name,
-      estimated,
-      actual: 0,
-      completed: false,
-      id: newId,
-      running: false,
-    };
+    const newId = v4()
+    const task = { name, estimated, initial: 0, final: 0, completed: false, id:newId, running: false };
     setTasksList([...tasksList, task]);
     setName("");
     setEstimated(1);
@@ -166,10 +182,12 @@ function EditModal() {
       <Task
         name={task.name}
         estimated={task.estimated}
-        actual={task.actual}
+        initial={task.initial}
+        final={task.final}
         completed={task.completed}
         id={task.id}
         modalHandler={modalHandler}
+        roundsCompleted={roundsCompleted}
         key={task.id}
       />
     );
