@@ -9,11 +9,11 @@ function Task({ name, estimated, actual, completed, id, modalHandler }) {
         {actual}/{estimated}
       </span>
       <span>{completed ? "Completed" : "In progress"}</span>
-      <span 
+      {/* <span 
         onClick={() => modalHandler('edit', id)} 
         className="material-icons">
         menu_open
-      </span>
+      </span> */}
     </div>
   );
 }
