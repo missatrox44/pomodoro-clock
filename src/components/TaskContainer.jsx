@@ -39,8 +39,8 @@ function TaskContainer({ roundsCompleted }) {
 
   function getInitialById(id) {
     const task = getTaskById(id);
-    const index = indexOf(task);
-    return tasksList[task - 1 ? task - 1 : -1].final + 1;
+    const index = tasksList.indexOf(task);
+    return tasksList[index - 1 > 0 ? index - 1 : 0].final + 1;
     // checks if there is a previous task in tasksList. If there is, returns the task.final value from that previous task, +1. If there is no previous task, then it returns 0 (-1 + 1).
   }
 
@@ -187,9 +187,10 @@ function TaskContainer({ roundsCompleted }) {
     // setTasksList(newList);
   }
 
-  function completeTask(task) {
-    // const task = getTaskById(id);
-    task.completed(!completed);
+  function completeTask(id) {
+    const task = getTaskById(id);
+    console.log(task);
+    task.completed = !task.completed;
     const initial = getInitialById(id);
     const final = getFinal();
     return task;
@@ -198,20 +199,20 @@ function TaskContainer({ roundsCompleted }) {
   function editItem(id, array, func) {
     const task = getTaskById(id);
     const index = array.indexOf(task);
-    const arrayStart = array.slice(0, index - 1);
-    if (func) {
-      const editedTask = func(id, array);
-    }
-    const arrayEnd = array.slice(index + 1, -1);
+    const editedTask = func(id, array);
+    const arrayStart = array.slice(0, index);
+    const arrayEnd = array.slice(index + 1, array.length);
     const midArray = arrayStart.concat(editedTask);
     const editedArray = midArray.concat(arrayEnd);
+    console.log(`${arrayStart.length} + ${midArray.length} +  ${arrayEnd.length} = ${arrayStart.length + midArray.length + arrayEnd.length}}`)
+    console.log("This is the length of the new edited array: " + editedArray.length);
     return editedArray;
   }
 
   // TODO
   function completedHandler(id) {
     const task = getTaskById(id);
-    setTasksList(editItem(id,array, completeTask))
+    setTasksList(editItem(id, tasksList, completeTask))
   }
 
   const tasks = tasksList.map((task) => {
@@ -276,9 +277,9 @@ function TaskContainer({ roundsCompleted }) {
         </div>
       </div>
 
-      <div className={isHideEditModal ? "hidden" : ""}>
+      {/* <div className={isHideEditModal ? "hidden" : ""}>
         <EditModal />
-      </div>
+      </div> */}
     </div>
   );
 }

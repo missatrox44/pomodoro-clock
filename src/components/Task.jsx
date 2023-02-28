@@ -11,7 +11,7 @@ function Task({ name, estimated, initial, final, completed, id, modalHandler, ro
   return (
     <div className='task-list-item' id={id}>
       <div
-        onClick={() => completedHandler (id)}
+        onClick={() => completedHandler(id)}
         className={`material-icons icons ${
          completed ? 'task-completed' : 'in-progress'
         }`}>
