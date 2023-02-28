@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 function Task({ name, estimated, initial, final, completed, id, modalHandler, roundsCompleted }) {
-  console.log("This is id from Task function: " + id);
+  console.log('This is id from Task function: ' + id);
 
   const [isComplete, setIsComplete] = useState(false);
   function handleClickIcon() {
@@ -9,11 +9,11 @@ function Task({ name, estimated, initial, final, completed, id, modalHandler, ro
   }
 
   return (
-    <div className="task-list-item" id={id}>
+    <div className='task-list-item' id={id}>
       <div
         onClick={() => handleClickIcon()}
         className={`material-icons icons ${
-          isComplete ? "task-completed" : "in-progress"
+          isComplete ? 'task-completed' : 'in-progress'
         }`}>
         check_circle_outline
       </div>
@@ -21,10 +21,10 @@ function Task({ name, estimated, initial, final, completed, id, modalHandler, ro
       <span>
         {completed? final-roundsCompleted : roundsCompleted-initial}/{estimated}
       </span>
-      <span>{completed ? "Completed" : "In progress"}</span>
+      <span>{completed ? 'Completed' : 'In progress'}</span>
       {/* <span 
         onClick={() => modalHandler('edit', id)} 
-        className="material-icons">
+        className='material-icons'>
         menu_open
       </span> */}
     </div>

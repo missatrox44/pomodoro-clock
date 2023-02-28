@@ -192,10 +192,26 @@ a {
   padding-bottom: 2rem;
 }
 
+/* TODO light green shade for long-break */
+.long-break {
+
+}
+
+/* TODO light blue shade for short-break */
+.short-break {
+
+}
+
 .task-completed {
   color: green;
 }
 
 .in-progress {
   color: gray;
+}
+
+@media (max-width: 767px) {
+  .pomodoro {
+    width: 100%;
+  }
 }
