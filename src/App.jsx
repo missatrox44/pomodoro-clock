@@ -3,18 +3,14 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 import Header from "./components/Header";
-import TimerContainer from "./components/TimerContainer";
-import TaskContainer from "./components/TaskContainer";
-import Modal from "./components/Modal";
-
+import Pomodoro from "./components/Pomodoro";
 
 
 function App() {
   return (
     <>
       <Header />
-      <TimerContainer />
-      <TaskContainer/>
+      <Pomodoro />
     </>
   );
 }

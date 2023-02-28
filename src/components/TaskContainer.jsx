@@ -1,9 +1,8 @@
-import React from "react";
 import Task from "./Task";
-import { useState } from "react";
+import { React, useState } from "react";
 import { v4 } from "uuid";
 
-function TaskContainer() {
+function TaskContainer({ roundsCompleted }) {
   const [isHideModal, setIsHideModal] = useState(true);
   const [isHideEditModal, setIsHideEditModal] = useState(true);
   const [name, setName] = useState("");
@@ -111,7 +110,7 @@ function deleteItem(id, array){
     e.preventDefault();
     // name, estimated, actual, completed, id,
     const newId = v4()
-    const task = { name, estimated, actual: 0, completed: false, id:newId };
+    const task = { name, estimated, actual: 0, completed: false, id:newId, running: false };
     setTasksList([...tasksList, task]);
     setName("");
     setEstimated(1);
