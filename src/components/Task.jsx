@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 
-function Task({ name, estimated, initial, final, completed, id, modalHandler, roundsCompleted }) {
+function Task({ name, estimated, initial, final, completed, id, modalHandler, roundsCompleted, completedHandler }) {
   console.log('This is id from Task function: ' + id);
 
-  const [isComplete, setIsComplete] = useState(false);
-  function handleClickIcon() {
-    setIsComplete(!isComplete);
-  }
+  // const [isComplete, setIsComplete] = useState(false);
+  // function handleClickIcon() {
+  //   setIsComplete(!isComplete);
+  // }
 
   return (
     <div className='task-list-item' id={id}>
       <div
-        onClick={() => handleClickIcon()}
+        onClick={() => completedHandler(id)}
         className={`material-icons icons ${
-          isComplete ? 'task-completed' : 'in-progress'
+         completed ? 'task-completed' : 'in-progress'
         }`}>
         check_circle_outline
       </div>
