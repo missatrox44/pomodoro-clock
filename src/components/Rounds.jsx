@@ -1,12 +1,11 @@
 import React from 'react'
-import { useState } from 'react'
 
-function Rounds() {
- const [roundsCompleted, setRoundsCompleted] = useState(0)
+function Rounds({ roundsCompleted }) {
+ // const [roundsCompleted, setRoundsCompleted] = useState(0)
 
   return (
     <div className="rounds-completed">
-      <span>Rounds</span>
+      <span>Rounds Completed: { roundsCompleted }</span>
     </div>
   )
 }

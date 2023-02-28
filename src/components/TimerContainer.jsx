@@ -5,7 +5,7 @@ import Rounds from './Rounds';
 const click = new Audio('./click.ogg');
 const ding = new Audio('./ding.ogg');
 
-function TimerContainer() {
+function TimerContainer({ setRoundsCompleted, roundsCompleted }) {
   const [timerMode, setTimerMode] = useState('pomodoro');
   const [secondsLeft, setsecondsLeft] = useState(modeToMinutes(timerMode) * 60);
   const [timerRunning, setTimerRunning] = useState(false);
@@ -25,7 +25,7 @@ function TimerContainer() {
         timer = setInterval(() => {
           setsecondsLeft(secondsLeft => secondsLeft - 1);
           finishTimer(modeToMinutes(timerMode));
-        }, 1000);
+        }, 1);
       }
       return () => {
         clearInterval(timer); 
@@ -39,6 +39,7 @@ function finishTimer(minutes = 25){
     resetTimer(modeToMinutes(timerMode));
     setTimerRunning(false);
     setTimerPaused(false);
+    setRoundsCompleted(roundsCompleted+1);
   }
 }
 
@@ -105,7 +106,7 @@ const seconds = ((secondsLeft%60).toString()).padStart(2,0);
       }</button>
   
     </div>
-    <Rounds/>
+    <Rounds roundsCompleted={roundsCompleted}/>
   </div>
   )
 }
