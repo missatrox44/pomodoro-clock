@@ -2,16 +2,11 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
-import Header from "./components/Header";
-import Pomodoro from "./components/Pomodoro";
-
+import Wrapper from "./components/Wrapper";
 
 function App() {
   return (
-    <>
-      <Header />
-      <Pomodoro />
-    </>
+      <Wrapper />
   );
 }
 export default App;

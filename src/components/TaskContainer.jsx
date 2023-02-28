@@ -2,10 +2,6 @@ import Task from "./Task";
 import { React, useState } from "react";
 import { v4 } from "uuid";
 
-
-// Okay so here's my idea on how to complete this whole tracking of roundsCompleted per Task--I think we can just calculate them based on current state. My idea is to mark the roundsCompleted when a Task is created, replacing the task.actual value with a task.initial value. Then wherever we want to reference the "actual" rounds completed, we can merely write roundsCompleted - task.initial. Then when it is marked as complete, we can create another state called task.final (which is roundsCompleted when the task is decommissioned), and task.final - task.initial should give the completed tasks their historical number of completedRounds per task. 
-
-
 function TaskContainer({ roundsCompleted }) {
   const [isHideModal, setIsHideModal] = useState(true);
   const [isHideEditModal, setIsHideEditModal] = useState(true);
@@ -25,8 +21,6 @@ function TaskContainer({ roundsCompleted }) {
     },
   ]);
 
-  // task.initial = tasksList[task.]task.final + 1.
-
   function getFinal(){
     return roundsCompleted;
   }
@@ -39,8 +33,6 @@ function TaskContainer({ roundsCompleted }) {
   
   const [id, setId] = useState(placeholderId);
 
-// task.initial = tasksList[task.]task.final + 1.
-
 function getFinal(){
   return roundsCompleted;
 }
@@ -48,29 +40,26 @@ function getFinal(){
 function getInitialById(id){
   const task = getTaskById(id);
   const index = indexOf(task);
-  return tasksList[task - 1 ? task-1 : 0].final + 1.
+  return tasksList[task-1? task-1 : -1].final + 1;
+// checks if there is a previous task in tasksList. If there is, returns the task.final value from that previous task, +1. If there is no previous task, then it returns 0 (-1 + 1).
 }
-
 
   function modalHandler(type, id) {
     showModal(type);
-    setId(id); // Once a user clicks on the open_list icon in the editModal, it will call this function, which will call setId(id), making that list item's id available in the state, so that it can be consumed by other components.
+    setId(id); // Once a user clicks on the open_list icon in the editModal, it will call this function, which will call setId(id), making the current list item's id available in the state, so that it can be consumed by other components.
   }
 
   function getTaskById(id) {
     const task = tasksList.find((task) => {
       return task.id === id;
-    }); // Here we use the array method array.find() to search the tasksList for the task that matches the current working (state) id. Once we have that task, we can render its properties in this component...
+    }); // Here we use the array method array.find() to search the tasksList for the task that matches the current working (state) id.
     return task;
   }
 
-
   function actual(id){ 
+    // This function checks whether the task is completed and returns the correct number...
     const task = getTaskById(id);
-    console.log("Actual rounds completed: " + task.completed ? task.final-task.roundsCompleted : task.roundsCompleted-task.initial )
-    return task.completed? task.final-task.roundsCompleted : task.roundsCompleted-task.initial // This function checks whether the task is completed and returns the correct number...
-
-
+    return task.completed? task.final-task.roundsCompleted : task.roundsCompleted-task.initial 
   }
 
 // EDIT MODAL
