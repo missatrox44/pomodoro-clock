@@ -7,33 +7,34 @@ function TaskContainer({ roundsCompleted }) {
   const [isHideEditModal, setIsHideEditModal] = useState(true);
   const [name, setName] = useState("");
   const [estimated, setEstimated] = useState(1);
-  const placeholderId = v4();
-  const [activeTaskId, setActiveTaskId] = useState(placeholderId);
+  // const placeholderId = v4();
+  const [activeTaskId, setActiveTaskId] = useState(
+    // placeholderId
+    ''
+    );
   // name, estimated, actual, completed, id, modalHandler, actual
   const [tasksList, setTasksList] = useState([
-    {
-      name: "Rename Me",
-      estimated: 1,
-      completed: false,
-      id: placeholderId,
-      modalHandler: modalHandler,
-      actual: 0
-    },
+    // {
+    //   name: "Rename Me",
+    //   estimated: 1,
+    //   completed: false,
+    //   id: placeholderId,
+    //   modalHandler: modalHandler,
+    //   actual: 0
+    // },
   ]);
 
   useEffect(() => {
     // const task = getTaskById(activeTaskId); 
-    setTasksList(editItem(activeTaskId, tasksList, updateActual));
+    if (tasksList.length > 0){
+      setTasksList(editItem(activeTaskId, tasksList, updateActual));
+    }
     return () => {
       // clean up
     };
   }, [roundsCompleted]);
 
-// 1) when a new task is created, call a function that checks if there is a previous task. if there isn't, activeTaskId is set to this task's ID. 
-// 2) when roundsCompleted changes, const task = getTaskById(activeTask); task.actual++;
-// 3) when the task is marked as complete (id) => const task = getTaskById(id); const index = getIndexByTask(task); tasksList[index + 1] ? setActiveTaskId(tasksList[index + 1]) : setactiveTaskId(null).
-
-  const [id, setId] = useState(placeholderId);
+  // const [id, setId] = useState(placeholderId);
 
   function modalHandler(type, id) {
     showModal(type);
@@ -136,7 +137,7 @@ function TaskContainer({ roundsCompleted }) {
   function handleSubmit(e) {
     e.preventDefault();
     // name, estimated, actual, completed, id, actual
-    if (!activeTaskId){return;}
+    // if (!activeTaskId){return;}
     const newId = v4();
     const task = {
       name,
@@ -151,10 +152,10 @@ function TaskContainer({ roundsCompleted }) {
     setName("");
     setEstimated(1);
     setIsHideModal(true);
-    if (tasksList[tasksList.length - 1]){
-      setActiveTaskId(newId);
-    }
-  }
+    if (tasksList[tasksList.length - 1]){ 
+      if (tasksList[tasksList.length - 1].completed) {setActiveTaskId(newId);}
+    } else { setActiveTaskId(newId) }
+  } // If the previous task in the queue is marked as completed, or there is no previous task, set this task as currently active.
 
   function cancelBtnClicked(e) {
     e.preventDefault();
@@ -199,13 +200,9 @@ function TaskContainer({ roundsCompleted }) {
   }
 
   function updateActual(id){
-    if (id === activeTaskId) {
       const task = getTaskById(id);
-      console.log(tasksList);
-      console.log(task);
-      task.actual = task.actual + 1;
+      task.actual++;
       return task
-  }
   }
 
   const tasks = tasksList.map((task) => {
