@@ -1,5 +1,5 @@
 import Task from "./Task";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { v4 } from "uuid";
 
 function TaskContainer({ roundsCompleted }) {
@@ -8,41 +8,32 @@ function TaskContainer({ roundsCompleted }) {
   const [name, setName] = useState("");
   const [estimated, setEstimated] = useState(1);
   const placeholderId = v4();
-  // name, estimated, actual, completed, id, modalHandler
+  const [activeTaskId, setActiveTaskId] = useState(placeholderId);
+  // name, estimated, actual, completed, id, modalHandler, actual
   const [tasksList, setTasksList] = useState([
     {
       name: "Rename Me",
       estimated: 1,
-      initial: roundsCompleted,
-      final: 0,
       completed: false,
       id: placeholderId,
       modalHandler: modalHandler,
+      actual: 0
     },
   ]);
 
-  function getFinal() {
-    return roundsCompleted;
-  }
+  useEffect(() => {
+    // const task = getTaskById(activeTaskId); 
+    setTasksList(editItem(activeTaskId, tasksList, updateActual));
+    return () => {
+      // clean up
+    };
+  }, [roundsCompleted]);
 
-  function getInitialById(id) {
-    const task = getTaskById(id);
-    const index = indexOf(task);
-    return tasksList[task - 1 ? task - 1 : 0].final + 1;
-  }
+// 1) when a new task is created, call a function that checks if there is a previous task. if there isn't, activeTaskId is set to this task's ID. 
+// 2) when roundsCompleted changes, const task = getTaskById(activeTask); task.actual++;
+// 3) when the task is marked as complete (id) => const task = getTaskById(id); const index = getIndexByTask(task); tasksList[index + 1] ? setActiveTaskId(tasksList[index + 1]) : setactiveTaskId(null).
 
   const [id, setId] = useState(placeholderId);
-
-  function getFinal() {
-    return roundsCompleted;
-  }
-
-  function getInitialById(id) {
-    const task = getTaskById(id);
-    const index = tasksList.indexOf(task);
-    return tasksList[index - 1 > 0 ? index - 1 : 0].final + 1;
-    // checks if there is a previous task in tasksList. If there is, returns the task.final value from that previous task, +1. If there is no previous task, then it returns 0 (-1 + 1).
-  }
 
   function modalHandler(type, id) {
     showModal(type);
@@ -56,61 +47,53 @@ function TaskContainer({ roundsCompleted }) {
     return task;
   }
 
-  function actual(id) {
-    // This function checks whether the task is completed and returns the correct number...
-    const task = getTaskById(id);
-    return task.completed
-      ? task.final - task.roundsCompleted
-      : task.roundsCompleted - task.initial;
-  }
-
   // EDIT MODAL
-  function EditModal() {
-    const task = getTaskById(id);
-    return (
-      <div className="modal edit-modal">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder={task.name}
-            value={name}
-            onChange={handleNameChange}
-            className="input-field"
-          />
-          <br />
+  // function EditModal() {
+  //   const task = getTaskById(id);
+  //   return (
+  //     <div className="modal edit-modal">
+  //       <form onSubmit={handleSubmit}>
+  //         <input
+  //           type="text"
+  //           placeholder={task.name}
+  //           value={name}
+  //           onChange={handleNameChange}
+  //           className="input-field"
+  //         />
+  //         <br />
 
-          <span>
-            {actual(id)}/{task.estimated} Pomodoros
-          </span>
-          <br />
-          <input
-            type="number"
-            placeholder={actual(id).toString()}
-            onChange={handleEstimatedChange}
-            className="input-field"
-            // value={actual}
-          />
-          <span>/</span>
-          <input
-            type="number"
-            value={estimated}
-            placeholder={task.estimated}
-            onChange={handleEstimatedChange}
-            className="input-field"
-          />
-          <button type="button" onClick={minusOne}>
-            <span className="material-icons icons">arrow_drop_down</span>
-          </button>
-          <button type="button" onClick={addOne}>
-            <span className="material-icons icons">arrow_drop_up</span>
-          </button>
-          <button onClick={() => deleteBtnClicked(id)}>Delete</button>
-          <button onClick={(e) => cancelBtnClicked(e)}>Cancel</button>
-          <button type="submit">Save</button>
-        </form>
-      </div>
-    );
-  }
+  //         <span>
+  //           {actual(id)}/{task.estimated} Pomodoros
+  //         </span>
+  //         <br />
+  //         <input
+  //           type="number"
+  //           placeholder={actual(id).toString()}
+  //           onChange={handleEstimatedChange}
+  //           className="input-field"
+  //           // value={actual}
+  //         />
+  //         <span>/</span>
+  //         <input
+  //           type="number"
+  //           value={estimated}
+  //           placeholder={task.estimated}
+  //           onChange={handleEstimatedChange}
+  //           className="input-field"
+  //         />
+  //         <button type="button" onClick={minusOne}>
+  //           <span className="material-icons icons">arrow_drop_down</span>
+  //         </button>
+  //         <button type="button" onClick={addOne}>
+  //           <span className="material-icons icons">arrow_drop_up</span>
+  //         </button>
+  //         <button onClick={() => deleteBtnClicked(id)}>Delete</button>
+  //         <button onClick={(e) => cancelBtnClicked(e)}>Cancel</button>
+  //         <button type="submit">Save</button>
+  //       </form>
+  //     </div>
+  //   );
+  // }
 
   function showModal(modalType) {
     if (modalType === "edit") {
@@ -128,14 +111,9 @@ function TaskContainer({ roundsCompleted }) {
 
   function deleteItem(id, array) {
     const task = getTaskById(id);
-    console.log("Here's the task to be deleted from its array: " + task, array);
     const index = array.indexOf(task);
-    console.log("Index of deleted task: " + index);
     const arrayStart = array.slice(0, index - 1);
-    console.log("arrayStart: " + arrayStart);
     const arrayEnd = array.slice(index + 1, -1);
-    console.log("arrayEnd: " + arrayEnd);
-    console.log("return value: " + arrayStart.concat(arrayEnd));
     return arrayStart.concat(arrayEnd);
   }
 
@@ -157,7 +135,8 @@ function TaskContainer({ roundsCompleted }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // name, estimated, actual, completed, id,
+    // name, estimated, actual, completed, id, actual
+    if (!activeTaskId){return;}
     const newId = v4();
     const task = {
       name,
@@ -166,12 +145,15 @@ function TaskContainer({ roundsCompleted }) {
       final: 0,
       completed: false,
       id: newId,
-      running: false,
+      actual:0,
     };
     setTasksList([...tasksList, task]);
     setName("");
     setEstimated(1);
     setIsHideModal(true);
+    if (tasksList[tasksList.length - 1]){
+      setActiveTaskId(newId);
+    }
   }
 
   function cancelBtnClicked(e) {
@@ -188,13 +170,16 @@ function TaskContainer({ roundsCompleted }) {
   }
 
   function completeTask(id) {
-    const task = getTaskById(id);
-    console.log(task);
+    const task = getTaskById(id); 
+    const index = tasksList.indexOf(task); 
+    tasksList[index + 1] ? 
+      setActiveTaskId(tasksList[index + 1]) : 
+      console.log("Bad!");
     task.completed = !task.completed;
-    const initial = getInitialById(id);
-    const final = getFinal();
     return task;
   }
+
+  
 
   function editItem(id, array, func) {
     const task = getTaskById(id);
@@ -204,15 +189,23 @@ function TaskContainer({ roundsCompleted }) {
     const arrayEnd = array.slice(index + 1, array.length);
     const midArray = arrayStart.concat(editedTask);
     const editedArray = midArray.concat(arrayEnd);
-    console.log(`${arrayStart.length} + ${midArray.length} +  ${arrayEnd.length} = ${arrayStart.length + midArray.length + arrayEnd.length}}`)
-    console.log("This is the length of the new edited array: " + editedArray.length);
     return editedArray;
   }
 
   // TODO
   function completedHandler(id) {
     const task = getTaskById(id);
-    setTasksList(editItem(id, tasksList, completeTask))
+    setTasksList(editItem(id, tasksList, completeTask));
+  }
+
+  function updateActual(id){
+    if (id === activeTaskId) {
+      const task = getTaskById(id);
+      console.log(tasksList);
+      console.log(task);
+      task.actual = task.actual + 1;
+      return task
+  }
   }
 
   const tasks = tasksList.map((task) => {
@@ -220,15 +213,13 @@ function TaskContainer({ roundsCompleted }) {
       <Task
         name={task.name}
         estimated={task.estimated}
-        initial={task.initial}
-        final={task.final}
         completed={task.completed}
         id={task.id}
         modalHandler={modalHandler}
         roundsCompleted={roundsCompleted}
         completedHandler={completedHandler}
+        actual={task.actual}
         key={task.id}
-        
       />
     );
   });

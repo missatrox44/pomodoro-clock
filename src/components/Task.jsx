@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 
-function Task({ name, estimated, initial, final, completed, id, modalHandler, roundsCompleted, completedHandler }) {
-  console.log('This is id from Task function: ' + id);
-
-  // const [isComplete, setIsComplete] = useState(false);
-  // function handleClickIcon() {
-  //   setIsComplete(!isComplete);
-  // }
+function Task({ name, estimated, completed, id, modalHandler, roundsCompleted, completedHandler, actual }) {
 
   return (
     <div className='task-list-item' id={id}>
@@ -19,7 +13,9 @@ function Task({ name, estimated, initial, final, completed, id, modalHandler, ro
       </div>
       <span>{name}</span>
       <span>
-        {completed? final-roundsCompleted : roundsCompleted-initial}/{estimated}
+        {actual}
+        /
+        {estimated}
       </span>
       <span>{completed ? 'Completed' : 'In progress'}</span>
       {/* <span 
