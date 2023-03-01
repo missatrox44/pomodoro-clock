@@ -9,11 +9,20 @@
   /* vertical-align: baseline; */
 }
 
-button,
-task {
+button {
+  font-size: .8rem;
+  padding: .5rem;
   border-radius: .3rem;
   border: transparent;
+}
+
+task {
   padding: 1rem;
+}
+
+task, button {
+  border-radius: .3rem;
+  border: transparent;
   background-color: transparent;
   color: var(--surface2-light);
 }
@@ -37,9 +46,25 @@ p,
   color: var(--text1-light);
 }
 
+.TimerContainer, .ControlMenu {
+  container-type: inline-size;
+}
+
 .clock-readout {
-  font-size: 7rem;
+  font-size: 5rem;
   color: var(--surface3-light);
+}
+
+@container (min-width: 375px){
+  .clock-readout {
+    font-size: 8rem;
+  }
+}
+@container (min-width: 375px){
+  button{
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
 }
 
 .top-menu {
