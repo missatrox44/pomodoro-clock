@@ -7,25 +7,11 @@ function TaskContainer({ roundsCompleted }) {
   const [isHideEditModal, setIsHideEditModal] = useState(true);
   const [name, setName] = useState("");
   const [estimated, setEstimated] = useState(1);
-  // const placeholderId = v4();
-  const [activeTaskId, setActiveTaskId] = useState(
-    // placeholderId
-    ''
-    );
+  const [activeTaskId, setActiveTaskId] = useState('');
   // name, estimated, actual, completed, id, modalHandler, actual
-  const [tasksList, setTasksList] = useState([
-    // {
-    //   name: "Rename Me",
-    //   estimated: 1,
-    //   completed: false,
-    //   id: placeholderId,
-    //   modalHandler: modalHandler,
-    //   actual: 0
-    // },
-  ]);
+  const [tasksList, setTasksList] = useState([]);
 
   useEffect(() => {
-    // const task = getTaskById(activeTaskId); 
     if (tasksList.length > 0){
       setTasksList(editItem(activeTaskId, tasksList, updateActual));
     }
@@ -33,8 +19,6 @@ function TaskContainer({ roundsCompleted }) {
       // clean up
     };
   }, [roundsCompleted]);
-
-  // const [id, setId] = useState(placeholderId);
 
   function modalHandler(type, id) {
     showModal(type);
