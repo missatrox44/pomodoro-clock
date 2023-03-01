@@ -15,7 +15,7 @@ task {
   border: transparent;
   padding: 1rem;
   background-color: transparent;
-  color: var(--text1-dark);
+  color: var(--surface2-light);
 }
 
 button:hover,
@@ -132,7 +132,7 @@ a {
 
 .modal .icons {
   font-size: 1rem;
-  /* color: var(--surface3-light); */
+  color: var(--surface3-light);
 }
 
 .modal input {
@@ -224,7 +224,7 @@ a {
   transition: all 1s;
 }
 .shortBreak-mode { background-color: 
-  hsl(170, var(--brand-saturation),var(--brand-lightness));
+  hsl(180, var(--brand-saturation), calc(var(--brand-lightness)), 1.8);
   transition: all 1s;
 }
 .longBreak-mode { background-color: hsl(
