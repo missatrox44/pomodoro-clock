@@ -1,5 +1,5 @@
 import Task from "./Task";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { v4 } from "uuid";
 
 function TaskContainer({ roundsCompleted }) {
@@ -9,44 +9,31 @@ function TaskContainer({ roundsCompleted }) {
   const [estimated, setEstimated] = useState(1);
   const placeholderId = v4();
   const [activeTaskId, setActiveTaskId] = useState(placeholderId);
-  // name, estimated, actual, completed, id, modalHandler
+  // name, estimated, actual, completed, id, modalHandler, actual
   const [tasksList, setTasksList] = useState([
     {
       name: "Rename Me",
       estimated: 1,
-      // initial: roundsCompleted,
-      // final: 0,
       completed: false,
       id: placeholderId,
       modalHandler: modalHandler,
+      actual: 0
     },
   ]);
 
-  // function getFinal() {
-  //   return roundsCompleted;
-  // }
+  useEffect(() => {
+    // const task = getTaskById(activeTaskId); 
+    setTasksList(editItem(activeTaskId, tasksList, updateActual));
+    return () => {
+      // clean up
+    };
+  }, [roundsCompleted]);
 
-  // function getInitialById(id) {
-  //   const task = getTaskById(id);
-  //   const index = indexOf(task);
-  //   const initial = tasksList[index - 1] && tasksList[index - 1].completed ? 
-  //   taskslist[index - 1].final + 1 : 
-  //   1;
-  //   return initial;
-  // }
+// 1) when a new task is created, call a function that checks if there is a previous task. if there isn't, activeTaskId is set to this task's ID. 
+// 2) when roundsCompleted changes, const task = getTaskById(activeTask); task.actual++;
+// 3) when the task is marked as complete (id) => const task = getTaskById(id); const index = getIndexByTask(task); tasksList[index + 1] ? setActiveTaskId(tasksList[index + 1]) : setactiveTaskId(null).
 
   const [id, setId] = useState(placeholderId);
-
-  // function getFinal() {
-  //   return roundsCompleted;
-  // }
-
-  // function getInitialById(id) {
-  //   const task = getTaskById(id);
-  //   const index = tasksList.indexOf(task);
-  //   return tasksList[index - 1 > 0 ? index - 1 : 0].final + 1;
-  //   // checks if there is a previous task in tasksList. If there is, returns the task.final value from that previous task, +1. If there is no previous task, then it returns 0 (-1 + 1).
-  // }
 
   function modalHandler(type, id) {
     showModal(type);
@@ -59,26 +46,6 @@ function TaskContainer({ roundsCompleted }) {
     }); // Here we use the array method array.find() to search the tasksList for the task that matches the current working (state) id.
     return task;
   }
-
-  // function actual(id) {
-  //   // This function checks whether the task is completed and returns the correct number...
-  //   const task = getTaskById(id);
-  //   const completed = task.completed;
-
-  //   const final = task.final;
-  //   const initial = task.initial;
-
-  //   console.log(
-  //     `task.completed = 
-  //     ${task.completed}. \n 
-  //     true = ${task.final} - ${task.initial} = ${task.final - task.initial} \n 
-  //     false = ${roundsCompleted} - ${task.initial}  = ${roundsCompleted - task.initial}`);
-
-  //   const actual = task.completed ? 
-  //   (task.final - task.initial) + 1 :
-  //    roundsCompleted - task.initial;
-  //     return actual;
-  // }
 
   // EDIT MODAL
   // function EditModal() {
@@ -168,7 +135,8 @@ function TaskContainer({ roundsCompleted }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // name, estimated, actual, completed, id,
+    // name, estimated, actual, completed, id, actual
+    if (!activeTaskId){return;}
     const newId = v4();
     const task = {
       name,
@@ -177,13 +145,15 @@ function TaskContainer({ roundsCompleted }) {
       final: 0,
       completed: false,
       id: newId,
-      running: false,
       actual:0,
     };
     setTasksList([...tasksList, task]);
     setName("");
     setEstimated(1);
     setIsHideModal(true);
+    if (tasksList[tasksList.length - 1]){
+      setActiveTaskId(newId);
+    }
   }
 
   function cancelBtnClicked(e) {
@@ -200,10 +170,12 @@ function TaskContainer({ roundsCompleted }) {
   }
 
   function completeTask(id) {
-    const task = getTaskById(id);
+    const task = getTaskById(id); 
+    const index = tasksList.indexOf(task); 
+    tasksList[index + 1] ? 
+      setActiveTaskId(tasksList[index + 1]) : 
+      console.log("Bad!");
     task.completed = !task.completed;
-    // task.initial = getInitialById(id);
-    // task.final = getFinal();
     return task;
   }
 
@@ -224,13 +196,16 @@ function TaskContainer({ roundsCompleted }) {
   function completedHandler(id) {
     const task = getTaskById(id);
     setTasksList(editItem(id, tasksList, completeTask));
-    setTasksList(editItem(id, tasksList, updateActual));
   }
 
   function updateActual(id){
-    const task = getTaskById(id);
-    task.actual++;
-    return task
+    if (id === activeTaskId) {
+      const task = getTaskById(id);
+      console.log(tasksList);
+      console.log(task);
+      task.actual = task.actual + 1;
+      return task
+  }
   }
 
   const tasks = tasksList.map((task) => {
@@ -238,8 +213,6 @@ function TaskContainer({ roundsCompleted }) {
       <Task
         name={task.name}
         estimated={task.estimated}
-        // initial={task.initial}
-        // final={task.final}
         completed={task.completed}
         id={task.id}
         modalHandler={modalHandler}
@@ -247,7 +220,6 @@ function TaskContainer({ roundsCompleted }) {
         completedHandler={completedHandler}
         actual={task.actual}
         key={task.id}
-        
       />
     );
   });
