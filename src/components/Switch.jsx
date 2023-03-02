@@ -7,10 +7,10 @@ export default function Switch({ developerMode, setDeveloperMode }) {
             <input 
                 type="checkbox" 
                 id="toggle" 
-                class="checkbox" 
+                className="checkbox" 
                 // checked={checked}
                 onChange={ () => setDeveloperMode(!developerMode) }/>
-            <label for="toggle" class="switch"></label>
+            <label htmlFor="toggle" className="switch"></label>
         </div>
     )
 }
