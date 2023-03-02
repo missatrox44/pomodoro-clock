@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Rounds from "./Rounds";
+import Switch from "./Switch";
 
 const click = new Audio("./click.ogg");
 const ding = new Audio("./ding.ogg");
@@ -10,6 +11,7 @@ function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTim
   const [secondsLeft, setsecondsLeft] = useState(modeToMinutes(timerMode) * 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
+  const [developerMode, setDeveloperMode] = useState(false);
 
   // I'd prefer to use enums but they don't exist in javascript. If we decide to go full typescript in the future though, we can have nicer things :). https://www.typescriptlang.org/docs/handbook/enums.html
   function modeToMinutes(mode) {
@@ -31,12 +33,12 @@ function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTim
       timer = setInterval(() => {
         setsecondsLeft((secondsLeft) => secondsLeft - 1);
         finishTimer(modeToMinutes(timerMode));
-      }, 1);
+      }, developerMode ? 1 : 1000);
     }
     return () => {
       clearInterval(timer);
     };
-  }, [timerRunning, secondsLeft]);
+  }, [timerRunning, secondsLeft, developerMode]);
 
   function finishTimer(minutes = 25) {
     if (secondsLeft === 1) {
@@ -95,8 +97,13 @@ function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTim
     return `${minutes}:${seconds}`;
   }
 
+  const checkHandler = () => {
+    setDeveloperMode(!developerMode);
+}
+
   return (
     <div className="TimerContainer">
+      <Switch developerMode={developerMode} setDeveloperMode={setDeveloperMode}/>
       <div className="ControlMenu">
         <button
           onClick={() => onStartingTimeChange("pomodoro")}
