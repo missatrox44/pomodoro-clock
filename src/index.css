@@ -8,15 +8,12 @@
   font-family: 'Roboto Mono', monospace;
   
 /* Color Theme--notes from article: https://web.dev/building-a-color-scheme/ */
-
-  --black: hsl(0, 48%, 47%);
   --brand-hue: 0;
   --brand-saturation: 45%;
   --brand-lightness: 51%;
   --brand-color: hsl(var(--brand-hue), var(--brand-saturation), var(--brand-lightness));
 
 /* Light Theme */
-
   --text1-light: hsl(var(--brand-hue) var(--brand-saturation) 10%);
   --text2-light: hsl(var(--brand-hue) 30% 30%);
 
@@ -61,4 +58,4 @@ input, textarea, p {
   font-size: inherit;
 }
 
-body { margin: 0; height: vh;}
+body { margin: 0; }
