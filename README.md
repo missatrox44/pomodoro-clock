@@ -62,26 +62,27 @@ The landing page is colored red denoting the timer is set to run a Pomodoro (25 
 ![step1](./imgs/step1.png)
 
 The user can click on the 'Add task' button to add a task. Enter the name of task and estimated Pomodoros it will take to complete the task. Click 'Save' to add task or 'Cancel' to close the modal.
-![step1](./imgs/step2.png)
+![step2](./imgs/step2.png)
 
 An added task will have a greyed out checkmark denoting the task has not been completed. Actual pomodoro rounds are displayed on the left side of / and estimated is displayed on the right. Click the 'Start' button to start the timer.
-![step1](./imgs/step3.png)
+![step3](./imgs/step3.png)
 
 After a Pomodoro round has been completed, click the 'Short Break' tab at the top of the timer. The color theme of the app should change and the timer will be reset to 5 min. A running count of pomodoros completed will be displayed as 'Rounds Completed' and will be updated in the current task being tracked. Repeat for three more rounds.
-![step1](./imgs/step4.png)
+![step4](./imgs/step4.png)
 
 After four rounds have been completed, click the 'Long Break' tab. The color theme of the app should change and the timer will be reset to 15 min.
-![step1](./imgs/step5.png)
+![step5](./imgs/step5.png)
 
 A task can be marked as completed by clicking the grey checkmark icon. Once completed, the task will no longer be tracked. The user can add another task and repeat the steps above.
-![step1](./imgs/step6.png)
+![step6](./imgs/step6.png)
 
+
+NEW FEATURE ALERT: A toggle switch has been added to change the app to run in developer mode. Developer mode counts time the time by 1000% to display functionality of the app. Keep toggle set to default (left) to use the app as intended.
+![step7](./imgs/step7.png)
 
 ## Future Development
-
 - Reset timer feature
 - Edit task feature
-- Toggle to set app in developer mode or productive mode. Developer mode runs the clock at 1000x speed, productive mode will run at normal time.
 
 ## Contributing
 
