@@ -4,7 +4,7 @@
 
 ## Deployed Link
 
-Click [here](https://able-increase.surge.sh/)
+Click [here](https://missatrox44.github.io/pomodoro-clock/)
 
 ## Description
 
