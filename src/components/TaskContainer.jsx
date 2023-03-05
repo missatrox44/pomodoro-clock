@@ -156,15 +156,12 @@ function TaskContainer({ roundsCompleted }) {
 
   function completeTask(id) {
     const task = getTaskById(id); 
-    const index = tasksList.indexOf(task); 
-    tasksList[index + 1] ? 
-      setActiveTaskId(tasksList[index + 1]) : 
-      console.log("Bad!");
     task.completed = !task.completed;
+    // Mark the next task in the qeue as active...
+    const index = tasksList.indexOf(task); 
+    if (tasksList[index + 1]) {setActiveTaskId(tasksList[index + 1])};
     return task;
   }
-
-  
 
   function editItem(id, array, func) {
     const task = getTaskById(id);
@@ -257,5 +254,3 @@ function TaskContainer({ roundsCompleted }) {
 }
 
 export default TaskContainer;
-
-//             {/* https://dev.to/deboragaleano/how-to-handle-multiple-inputs-in-react-55el */}
