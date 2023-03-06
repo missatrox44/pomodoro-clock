@@ -1,8 +1,8 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import TimerContainer from "./TimerContainer";
 import TaskContainer from "./TaskContainer";
 
-export default function Pomodoro({ timerMode, setTimerMode }){
+export default function Pomodoro(prop: { timerMode:string, setTimerMode:Function }){
     
     const [roundsCompleted, setRoundsCompleted] = useState(0);
 
@@ -11,8 +11,8 @@ export default function Pomodoro({ timerMode, setTimerMode }){
         <TimerContainer 
             setRoundsCompleted={setRoundsCompleted} 
             roundsCompleted={roundsCompleted}
-            timerMode={timerMode}
-            setTimerMode={setTimerMode}
+            timerMode={prop.timerMode}
+            setTimerMode={prop.setTimerMode}
         />
         <TaskContainer roundsCompleted={roundsCompleted}/>
     </div>

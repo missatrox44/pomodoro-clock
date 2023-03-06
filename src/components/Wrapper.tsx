@@ -6,7 +6,7 @@ export default function Wrapper() {
     const [timerMode, setTimerMode] = useState("pomodoro");
     return (
         <div className={timerMode + '-mode'}>
-            <Header timerMode={timerMode}/>
+            <Header />
             <Pomodoro 
                 timerMode={timerMode}
                 setTimerMode={setTimerMode}

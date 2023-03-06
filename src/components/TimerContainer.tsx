@@ -6,33 +6,35 @@ import Switch from "./Switch";
 const click = new Audio("./click.ogg");
 const ding = new Audio("./ding.ogg");
 
-function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTimerMode }) {
-  // const [timerMode, setTimerMode] = useState("pomodoro");
-  const [secondsLeft, setsecondsLeft] = useState(modeToMinutes(timerMode) * 60);
+enum mode {
+  pomodoro = 25,
+  longBreak = 15,
+  shortBreak = 5,
+}
+
+function TimerContainer(prop: { setRoundsCompleted:Function, roundsCompleted:number, timerMode:string, setTimerMode:Function }) {
+  const [secondsLeft, setsecondsLeft] = useState(modeToMinutes(prop.timerMode) * 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerPaused, setTimerPaused] = useState(false);
   const [developerMode, setDeveloperMode] = useState(false);
 
-  // I'd prefer to use enums but they don't exist in javascript. If we decide to go full typescript in the future though, we can have nicer things :). https://www.typescriptlang.org/docs/handbook/enums.html
-  function modeToMinutes(mode) {
-    if (mode === "pomodoro") {
-      return 25;
+  function modeToMinutes(timerMode:string):number {
+    if (timerMode === "longBreak") {
+      return mode.longBreak;
     }
-    if (mode === "longBreak") {
-      return 15;
+    if (timerMode === "shortBreak") {
+      return mode.shortBreak;
     }
-    if (mode === "shortBreak") {
-      return 5;
-    }
-    return null;
+    return mode.pomodoro;
   }
+  
 
   useEffect(() => {
-    let timer;
+    let timer:number;
     if (timerRunning && secondsLeft > 0) {
       timer = setInterval(() => {
         setsecondsLeft((secondsLeft) => secondsLeft - 1);
-        finishTimer(modeToMinutes(timerMode));
+        finishTimer(modeToMinutes(prop.timerMode));
       }, developerMode ? 1 : 1000);
     }
     return () => {
@@ -44,12 +46,12 @@ function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTim
     if (secondsLeft === 1) {
       console.log("Ding!");
       ding.play();
-      resetTimer(modeToMinutes(timerMode));
+      resetTimer(modeToMinutes(prop.timerMode));
       setTimerRunning(false);
       setTimerPaused(false);
-      console.log(timerMode);
-      if (timerMode === "pomodoro") {
-        setRoundsCompleted(roundsCompleted + 1);
+      console.log(prop.timerMode);
+      if (prop.timerMode === "pomodoro") {
+        prop.setRoundsCompleted(prop.roundsCompleted + 1);
       }
     }
   }
@@ -68,14 +70,14 @@ function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTim
     }
   }
 
-  function resetTimer(minutes) {
+  function resetTimer(minutes: number) {
     setTimerRunning(false);
     const seconds = minutes * 60;
     setsecondsLeft(seconds);
   }
 
-  function onStartingTimeChange(mode) {
-    setTimerMode(mode);
+  function onStartingTimeChange(mode: string) {
+    prop.setTimerMode(mode);
     const minutes = modeToMinutes(mode);
     if (timerRunning || timerPaused) {
       let text = "Are you sure? You will lose your current timer.";
@@ -91,9 +93,9 @@ function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTim
     }
   }
 
-  function formatTime(secondsLeft) {
+  function formatTime(secondsLeft:number) {
     const minutes = Math.floor(secondsLeft / 60);
-    const seconds = (secondsLeft % 60).toString().padStart(2, 0);
+    const seconds = (secondsLeft % 60).toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
   }
 
@@ -107,19 +109,19 @@ function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTim
       <div className="ControlMenu">
         <button
           onClick={() => onStartingTimeChange("pomodoro")}
-          className={timerMode === "pomodoro" ? "mode" : ""}
+          className={prop.timerMode === "pomodoro" ? "mode" : ""}
         >
           Pomodoro
         </button>
         <button
           onClick={() => onStartingTimeChange("shortBreak")}
-          className={timerMode === "shortBreak" ? "mode" : ""}
+          className={prop.timerMode === "shortBreak" ? "mode" : ""}
         >
           Short Break
         </button>
         <button
           onClick={() => onStartingTimeChange("longBreak")}
-          className={timerMode === "longBreak" ? "mode" : ""}
+          className={prop.timerMode === "longBreak" ? "mode" : ""}
         >
           Long Break
         </button>
@@ -136,7 +138,7 @@ function TimerContainer({ setRoundsCompleted, roundsCompleted, timerMode, setTim
           )}
         </button>
       </div>
-      <Rounds roundsCompleted={roundsCompleted} />
+      <Rounds roundsCompleted={prop.roundsCompleted} />
     </div>
   );
 }
