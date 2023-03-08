@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 
-function Task({ name, estimated, completed, id, modalHandler, roundsCompleted, completedHandler, actual }) {
+export default function Task(prop: { name:string, estimated:number, completed:boolean, id:string, modalHandler:Function, roundsCompleted:number, completedHandler:Function, actual:number }) {
 
   return (
-    <div className='task-list-item' id={id}>
+    <div className='task-list-item' id={prop.id}>
       <div
-        onClick={() => completedHandler(id)}
+        onClick={() => prop.completedHandler(prop.id)}
         className={`material-icons icons ${
-         completed ? 'task-completed' : 'in-progress'
+         prop.completed ? 'task-completed' : 'in-progress'
         }`}>
         check_circle_outline
       </div>
-      <span>{name}</span>
+      <span>{ prop.name }</span>
       <span>
-        {actual}
+        { prop.actual }
         /
-        {estimated}
+        { prop.estimated }
       </span>
-      <span>{completed ? 'Completed' : 'In progress'}</span>
+      <span>{prop.completed ? 'Completed' : 'In progress'}</span>
       {/* <span 
         onClick={() => modalHandler('edit', id)} 
         className='material-icons'>
@@ -26,5 +26,3 @@ function Task({ name, estimated, completed, id, modalHandler, roundsCompleted, c
     </div>
   );
 }
-
-export default Task;

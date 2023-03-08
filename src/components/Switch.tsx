@@ -1,7 +1,4 @@
-// import { useState } from "react";
-
-export default function Switch({ developerMode, setDeveloperMode }) {
-    // const [checked, setChecked] = useState(false);
+export default function Switch(prop: { developerMode:boolean, setDeveloperMode:Function }) {
     return (
         <div className="switch-container">
             <input 
@@ -9,7 +6,7 @@ export default function Switch({ developerMode, setDeveloperMode }) {
                 id="toggle" 
                 className="checkbox" 
                 // checked={checked}
-                onChange={ () => setDeveloperMode(!developerMode) }/>
+                onChange={ () => prop.setDeveloperMode(!prop.developerMode) }/>
             <label htmlFor="toggle" className="switch"></label>
         </div>
     )

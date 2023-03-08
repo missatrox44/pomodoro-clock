@@ -8,7 +8,6 @@ function TaskContainer({ roundsCompleted }) {
   const [name, setName] = useState("");
   const [estimated, setEstimated] = useState(1);
   const [activeTaskId, setActiveTaskId] = useState('');
-  // name, estimated, actual, completed, id, modalHandler, actual
   const [tasksList, setTasksList] = useState([]);
 
   useEffect(() => {
