@@ -30,7 +30,7 @@ function TimerContainer(prop: { setRoundsCompleted:Function, roundsCompleted:num
   
 
   useEffect(() => {
-    let timer:number;
+    let timer:Timer;
     if (timerRunning && secondsLeft > 0) {
       timer = setInterval(() => {
         setsecondsLeft((secondsLeft) => secondsLeft - 1);

@@ -1,8 +1,9 @@
 import Task from "./Task";
 import { React, useState, useEffect } from "react";
 import { v4 } from "uuid";
+import type {task}  from "../typeDef";
 
-function TaskContainer({ roundsCompleted }) {
+function TaskContainer(prop:{ roundsCompleted:number }) {
   const [isHideModal, setIsHideModal] = useState(true);
   const [isHideEditModal, setIsHideEditModal] = useState(true);
   const [name, setName] = useState("");
@@ -17,18 +18,18 @@ function TaskContainer({ roundsCompleted }) {
     return () => {
       // clean up
     };
-  }, [roundsCompleted]);
+  }, [prop.roundsCompleted]);
 
-  function modalHandler(type, id) {
+  function modalHandler(type:string, id:string) {
     showModal(type);
     setId(id); // Once a user clicks on the open_list icon in the editModal, it will call this function, which will call setId(id), making the current list item's id available in the state, so that it can be consumed by other components.
   }
 
-  function getTaskById(id) {
-    const task = tasksList.find((task) => {
+  function getTaskById(id:string):task|null {
+    const task = tasksList.find((task:task) => {
       return task.id === id;
     }); // Here we use the array method array.find() to search the tasksList for the task that matches the current working (state) id.
-    return task;
+    return (task);
   }
 
   // EDIT MODAL
@@ -79,7 +80,7 @@ function TaskContainer({ roundsCompleted }) {
   //   );
   // }
 
-  function showModal(modalType) {
+  function showModal(modalType:string) {
     if (modalType === "edit") {
       console.log("Showing the edit modal.");
       setIsHideEditModal(false);
@@ -89,11 +90,11 @@ function TaskContainer({ roundsCompleted }) {
     }
   }
 
-  function handleNameChange(event) {
+  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     setName(event.target.value);
   }
 
-  function deleteItem(id, array) {
+  function deleteItem(id:string, array: Array<any>): Array<any> {
     const task = getTaskById(id);
     const index = array.indexOf(task);
     const arrayStart = array.slice(0, index - 1);
@@ -193,7 +194,7 @@ function TaskContainer({ roundsCompleted }) {
         completed={task.completed}
         id={task.id}
         modalHandler={modalHandler}
-        roundsCompleted={roundsCompleted}
+        roundsCompleted={prop.roundsCompleted}
         completedHandler={completedHandler}
         actual={task.actual}
         key={task.id}
